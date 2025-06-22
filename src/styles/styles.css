@@ -5,6 +5,13 @@
     font-style: normal;
 }
 
+@font-face {
+    font-family: 'Orbitron';
+    src: url('/assets/fonts/Orbitron-VariableFont_wght.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
 body {
     font-family: sans-serif;
     margin: 0;
@@ -42,6 +49,7 @@ body::after {
     padding: 0;
     line-height: 1;
     border-bottom: 2px solid #fbfbfb;
+    text-transform: uppercase;
 }
 
 .tituloSecundario {
@@ -291,13 +299,13 @@ body::after {
 
 .product-item .info .productTitle {
     font-size: 1.2rem;
-    font-family: Verdana, sans-serif;
+    font-family: var(--text-font), Courier, monospace;
     font-weight: 700;
 }
 
 .product-item .info .description {
     font-size: 0.8rem;
-    font-family: 'Courier New', Courier, monospace;
+    font-family: var(--text-font), Courier, monospace;
     margin: 0;
     width: 90%;
 }
@@ -353,6 +361,7 @@ body::after {
 }
 
 .categoria span {
+    font-family: var(--text-font), Courier, monospace;
     display: inline-block;
     margin: 0.6rem 0.5rem;
     padding: 0.5rem 1.5rem;
@@ -402,7 +411,7 @@ body::after {
 }
 
 .stock span {
-    font-family: 'Courier New', Courier, monospace;
+    font-family: var(--text-font), Courier, monospace;
     font-weight: 400;
     font-size: 0.75rem;
     color: #ccc;

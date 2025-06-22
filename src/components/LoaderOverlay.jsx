@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import "../styles/LoaderOverlay.css";
-import logo from "../../assets/logo/logo-completo-negro.png"; // Ajustá el path si es necesario
 
 const LoaderOverlay = ({ visible }) => {
     const [shouldRender, setShouldRender] = useState(visible);
@@ -9,7 +8,7 @@ const LoaderOverlay = ({ visible }) => {
         if (visible) {
             setShouldRender(true);
         } else {
-            const timeout = setTimeout(() => setShouldRender(false), 800); // esperar la animación
+            const timeout = setTimeout(() => setShouldRender(false), 2000);
             return () => clearTimeout(timeout);
         }
     }, [visible]);
@@ -19,7 +18,14 @@ const LoaderOverlay = ({ visible }) => {
     return (
         <div className={`loader-overlay ${!visible ? "hidden" : ""}`}>
             <div className="loader-content">
-                <img src={logo} alt="Logo" className="loader-logo" />
+                <div className="uiverse-loader">
+                    <div className="loader"></div>
+                    <div className="loader"></div>
+                    <div className="loader"></div>
+                </div>
+
+                <h2 className="loader-title">Dielectronics.arg</h2>
+
                 <div className="equalizer">
                     <span></span>
                     <span></span>

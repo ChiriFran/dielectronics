@@ -75,7 +75,7 @@ function App() {
         </div>
       </div>
 
-      <h1 className="tituloPrincipal">Dielectronics.arg</h1>
+      <h1 className="tituloPrincipal">Di electronics arg</h1>
 
       <h2 className="tituloSecundario">Stock de tecnologia online</h2>
 
