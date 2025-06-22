@@ -28,16 +28,16 @@ body::after {
     right: 0;
     width: 100%;
     height: 100%;
-    background-image: url("../../assets/logo/logo-junto-negro.png");
+    background-image: url("../../assets/logo/dielectronics-blanco.png");
     background-size: 120px;
     background-repeat: repeat;
     background-position: center;
     z-index: 999;
     pointer-events: none;
     filter: brightness(100);
-    opacity: 0.03;
+    opacity: 0.05;
     z-index: -10;
-    overflow: hiden;
+    overflow: hidden;
 }
 
 .tituloPrincipal {
@@ -784,8 +784,7 @@ body::after {
 @media (max-width: 768px) {
 
     body::after {
-        opacity: 0.02;
-        background-image: url("../../assets/logo/B-negro.png");
+        background-image: url("../../assets/logo/dielectronics-blanco.png");
     }
 
     .logo {
