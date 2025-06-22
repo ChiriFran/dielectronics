@@ -204,15 +204,15 @@ body::after {
 /* producto item */
 .product-item {
     display: flex;
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0);
     /* Fondo translúcido más claro */
     border-radius: 12px;
     overflow: hidden;
     color: rgb(230, 230, 230);
     height: 220px;
     margin: 1rem 0;
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
     border: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow:
         0 1px 2px rgba(255, 255, 255, 0.04),
@@ -365,7 +365,7 @@ body::after {
     display: inline-block;
     margin: 0.6rem 0.5rem;
     padding: 0.5rem 1.5rem;
-    background: rgba(255, 255, 255, 0.094);
+    background: rgba(255, 255, 255, 0);
     color: #d2d2d2;
     border-radius: 100px;
     border: 1.5px solid rgba(255, 255, 255, 0.1);
@@ -784,6 +784,7 @@ body::after {
 @media (max-width: 768px) {
 
     body::after {
+        background-size: 80px;
         background-image: url("../../assets/logo/dielectronics-blanco.png");
     }
 
