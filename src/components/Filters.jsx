@@ -4,7 +4,7 @@ function Filters({
     categoriaSeleccionada,
     setCategoriaSeleccionada,
 }) {
-    const categorias = ["apple", "smartphones"]; // 🔹 Podés agregar más acá
+    const categorias = ["smartphones", "tablets", "headphones"]; // 🔹 Podés agregar más acá
 
     return (
         <div className="filters">
