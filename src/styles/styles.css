@@ -190,7 +190,7 @@ body::after {
 
 /* Color para los grupos (label de optgroup) */
 .filters select optgroup {
-  font-weight: bold;
+    font-weight: bold;
     background-color: #514d4d;
     color: #c5c5c5;
 }
@@ -559,19 +559,32 @@ body::after {
 
 .modal-content form {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
+    flex-wrap: wrap;
+    /* permite que los inputs salten a la siguiente línea */
+    gap: 1rem;
+    /* espacio entre columnas y filas */
+    justify-content: space-between;
     width: 100%;
 }
 
 .modal-content form input,
 .modal-content form button {
+    /* dos columnas con algo de espacio entre ellas */
     padding: 0.75rem;
     font-size: 1rem;
     border: none;
-    border-bottom: 2px solid rgb(102, 102, 102);
+    border-bottom: 2px solid rgb(187, 185, 185);
+    border-radius: 0;
+    box-sizing: border-box;
+}
+
+.modal-content form input {
+    width: 48%;
+    background-color: rgb(28, 27, 27);
+}
+
+.modal-content form button {
+    width: 108%;
 }
 
 .modal-product-item {
@@ -592,14 +605,15 @@ body::after {
 }
 
 .productoAgotadoMensaje {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: var(--title-font);
     color: rgb(255, 24, 24);
-    font-size: 1remrem;
+    font-size: 1rem;
     width: 100%;
     text-align: center;
 }
 
 .btn-eliminar-agotados {
+    font-family: var(--title-font);
     background-color: rgb(238, 51, 51);
     color: white;
     border: none;
@@ -669,6 +683,43 @@ body::after {
     transition: .2s;
 }
 
+.btn-whatsapp-succes {
+    font-family: var(--title-font);
+    background-color: #25d366;
+    color: rgb(55, 25, 25);
+    border: none;
+    padding: 0.7em 1.5em;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 1rem 0;
+    width: 100%;
+}
+
+.btn-copiar {
+    font-family: var(--title-font);
+    background-color: #f1f1f1;
+    border: 1px solid #ccc;
+    color: #333;
+    padding: 0.5rem 1em;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.2s;
+    width: 100%;
+}
+
+.btn-copiar:hover {
+    background-color: #eaeaea;
+}
+
+.form-error {
+    font-family: var(--title-font);
+    background-color: #2d2b2b;
+    color: rgb(253, 17, 17);
+    width: 100%;
+    padding: 1rem 1rem;
+    text-align: center;
+}
+
 /* checkout modal */
 .comprobante {
     display: flex;
@@ -708,7 +759,7 @@ body::after {
     display: inline-block;
     margin-top: 1rem;
     background: #25d366;
-    color: white;
+    color: rgb(25, 25, 25);
     padding: 10px 20px;
     border-radius: 8px;
     text-decoration: none;
@@ -926,7 +977,7 @@ body::after {
     }
 
     .modal-content form {
-        width: 100%;
+        gap: 5px;
     }
 
     .modalText {
