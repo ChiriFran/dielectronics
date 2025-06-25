@@ -44,7 +44,7 @@ body::after {
     display: inline-block;
     font-family: var(--title-font), sans-serif;
     font-size: 2.8rem;
-    margin: 0;
+    margin: 0 5%;
     margin-top: 2rem;
     padding: 0;
     line-height: 1;
@@ -55,7 +55,7 @@ body::after {
 .tituloSecundario {
     font-family: var(--title-font), sans-serif;
     font-size: 1.5rem;
-    margin: 0;
+    margin: 0 5%;
     margin-bottom: 3rem;
     padding: 0;
 }
@@ -120,7 +120,7 @@ body::after {
 
 /* general */
 .app-container {
-    max-width: 1000px;
+    max-width: 1200px;
     min-height: 100svh;
     margin: 0 auto;
 }
@@ -175,6 +175,7 @@ body::after {
     gap: 1rem;
     margin-bottom: 1rem;
     flex-wrap: wrap;
+    padding: 0 5%;
 }
 
 .filters input,
@@ -203,7 +204,9 @@ body::after {
 /* lista de productos */
 .product-list {
     display: flex;
-    flex-direction: column;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: center;
     gap: 1rem;
 
 }
@@ -211,13 +214,14 @@ body::after {
 /* producto item */
 .product-item {
     display: flex;
+    flex-flow: column;
     background: rgba(255, 255, 255, 0);
     /* Fondo translúcido más claro */
     border-radius: 12px;
     overflow: hidden;
     color: rgb(230, 230, 230);
-    height: 220px;
-    margin: 1rem 0;
+    width: 31%;
+    height: 600px;
     backdrop-filter: blur(2px);
     -webkit-backdrop-filter: blur(2px);
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -262,7 +266,10 @@ body::after {
 }
 
 .product-item .image {
-    width: 25%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
     min-width: 150px;
     padding: 0.5rem 0.6rem;
 }
@@ -270,6 +277,7 @@ body::after {
 .product-item .image img {
     width: 100%;
     height: 100%;
+    min-width: 300px;
     object-fit: cover;
     border-radius: 4px;
 }
@@ -278,9 +286,9 @@ body::after {
     position: relative;
     display: flex;
     flex-flow: column;
-    justify-content: space-around;
+    justify-content: center;
     height: 100%;
-    width: 50%;
+    width: auto;
     padding: 0 1rem;
     min-width: 200px;
     overflow: hidden;
@@ -308,6 +316,7 @@ body::after {
     font-size: 1.2rem;
     font-family: var(--text-font), Courier, monospace;
     font-weight: 700;
+    margin: 0;
 }
 
 .product-item .info .description {
@@ -318,11 +327,10 @@ body::after {
 }
 
 .product-item .info .price {
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     font-family: var(--title-font), sans-serif;
     font-weight: 700;
-    margin: 0;
-    margin-bottom: 0.5rem;
+    margin: 0.5rem 0 1rem;
     text-decoration: underline;
 }
 
@@ -335,11 +343,12 @@ body::after {
 
 /* producto item parte derecha */
 .product-item .cta {
-    width: 25%;
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 1rem;
+    padding-top: 0;
     min-width: 150px;
     box-sizing: border-box;
 }
@@ -349,7 +358,7 @@ body::after {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    align-items: flex-end;
+    align-items: center;
     height: 100%;
     width: 100%;
     box-sizing: border-box;
@@ -357,9 +366,14 @@ body::after {
 
 /* Categoría arriba */
 .product-item .categoria {
-    width: max-content;
+    position: absolute;
+    top: 0.8rem;
+    right: 0.5rem;
+    width: auto;
+    display: flex;
+    align-items: end;
+    justify-content: center;
     color: white;
-    padding: 0.3rem 0;
     margin: 0;
     border-radius: 4px;
     font-size: 0.8rem;
@@ -370,9 +384,9 @@ body::after {
 .categoria span {
     font-family: var(--text-font), Courier, monospace;
     display: inline-block;
-    margin: 0.6rem 0.5rem;
-    padding: 0.5rem 1.5rem;
-    background: rgba(255, 255, 255, 0);
+    margin: 0 5px;
+    padding: 0.2rem 1rem;
+    background: #2c2c2c;
     color: #d2d2d2;
     border-radius: 100px;
     border: 1.5px solid rgba(255, 255, 255, 0.1);
@@ -841,6 +855,10 @@ body::after {
 /* estilos mobile */
 @media (max-width: 768px) {
 
+    body {
+        padding: 0.5rem;
+    }
+
     body::after {
         background-size: 80px;
         background-image: url("../../assets/logo/dielectronics-blanco.png");
@@ -862,6 +880,7 @@ body::after {
     .tituloSecundario {
         font-family: var(--title-font), sans-serif;
         font-size: 1.1rem;
+        margin: 0;
     }
 
     .stock-aviso {
@@ -896,6 +915,7 @@ body::after {
     .filters {
         flex-flow: row;
         margin-top: 5rem;
+        padding: 0 2%;
     }
 
     .filters input {
@@ -906,31 +926,19 @@ body::after {
     }
 
     .product-item {
-        flex-direction: column;
-        height: auto;
-        /* 🔹 Permitimos altura flexible en mobile */
-    }
-
-    .product-item .image {
-        width: 95%;
-    }
-
-    .product-item .info,
-    .product-item .cta {
         width: 100%;
+        height: auto;
     }
 
     .product-item .cta-content {
-        flex-direction: column-reverse;
         justify-content: space-between;
         align-items: center;
         height: auto;
         gap: 1rem;
     }
 
-    .product-item .categoria,
     .product-item .stock {
-        align-self: auto;
+        align-self: flex-end;
     }
 
     .categoria span:nth-last-of-type {
