@@ -212,11 +212,11 @@ function PurchaseModal({ onClose }) {
 ¡Hola BAWAX! Realicé una pedido en la tienda.
 🧾 ID del Pedido: ${docId}
 📌 Fecha: ${fecha}
-👤 Nombre: ${nombre}
+👤 Nombre: ${nombre} -  DNI: ${dni}
 📧 Email: ${correo}
 📱 Teléfono: ${telefono}
 --------------------------
-🏠 Dirección de envío: ${direccion}${departamento ? `, (${departamento})` : " (casa)"}, ${localidad} - DNI: ${dni}
+🏠 Dirección de envío: ${direccion}${departamento ? `, (${departamento})` : " (casa)"}, ${localidad}
 --------------------------
 🛒 Productos:
 ${cartItems.map(p => `- ${p.cantidad} x ${p.titulo} ($${p.precio * p.cantidad})`).join("\n")}
