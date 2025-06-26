@@ -73,7 +73,6 @@ body::after {
     font-family: var(--title-font);
 }
 
-
 /* productos de carga */
 .skeleton {
     opacity: 0.5;
@@ -238,7 +237,6 @@ body::after {
     transition: .4s;
 }
 
-
 .product-item .image {
     display: flex;
     align-items: center;
@@ -282,7 +280,6 @@ body::after {
     z-index: 999;
     pointer-events: none;
 }
-
 
 .product-item .info .productTitle {
     font-size: 1.2rem;
