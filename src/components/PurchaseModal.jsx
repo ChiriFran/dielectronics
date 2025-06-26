@@ -257,7 +257,7 @@ ${cartItems.map(p => `- ${p.cantidad} x ${p.titulo} ($${p.precio * p.cantidad})`
                         <>
                             <h2 className="modalTitle">✅ Pedido armado con éxito</h2>
                             <p className="modalText">
-                                🧾 Tu número de pedido es: <br /> <strong>{pedidoId}</strong> 
+                                🧾 Tu número de pedido es: <br /> <strong>{pedidoId}</strong>
                             </p>
                             <br />
                             <p className="modalText">
@@ -322,10 +322,6 @@ ${cartItems.map(p => `- ${p.cantidad} x ${p.titulo} ($${p.precio * p.cantidad})`
                             <div className="totalContainer">
                                 <strong>Total:</strong> ${total}
                             </div>
-
-                            <p className="modalText">
-                                Al completar y enviar este formulario, usted confirma su intención de realizar la compra. Nos contactaremos a la brevedad
-                            </p>
 
                             <p className="modalText">Formulario de Compra</p>
 

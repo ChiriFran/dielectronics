@@ -213,6 +213,7 @@ body::after {
 
 /* producto item */
 .product-item {
+    position: relative;
     display: flex;
     flex-flow: column;
     background: rgba(255, 255, 255, 0);
@@ -227,42 +228,16 @@ body::after {
     box-shadow:
         0 1px 2px rgba(255, 255, 255, 0.04),
         0 8px 32px rgba(0, 0, 0, 0.25);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    /* Para que el brillo no sobresalga */
+    transition: .4s;
 }
 
-.product-item {
-    position: relative;
-    overflow: hidden;
+.product-item:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 20px rgba(255, 255, 255, 0.044), 0 2px 6px rgba(0, 0, 0, 0.06);
+    transition: .4s;
 }
 
-/* Capa de brillo muy suave */
-.product-item::before {
-    content: "";
-    position: absolute;
-    top: -40%;
-    left: -60%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(ellipse at center,
-            rgba(255, 255, 255, 0.08) 0%,
-            rgba(255, 255, 255, 0.015) 40%,
-            rgba(255, 255, 255, 0) 70%);
-    transform: rotate(-20deg);
-    animation: glossSweep 6s infinite ease-in-out;
-    pointer-events: none;
-    z-index: 2;
-}
-
-/* Movimiento sutil y elegante */
-@keyframes glossSweep {
-    0% {
-        transform: translateX(-120%) rotate(-15deg);
-    }
-
-    100% {
-        transform: translateX(120%) rotate(-15deg);
-    }
-}
 
 .product-item .image {
     display: flex;
@@ -319,6 +294,7 @@ body::after {
 .product-item .info .description {
     font-size: 0.8rem;
     font-family: var(--text-font), Courier, monospace;
+    color: #999696;
     margin: 0;
     width: 90%;
 }
@@ -363,15 +339,14 @@ body::after {
 /* Categoría arriba */
 .product-item .categoria {
     position: absolute;
-    top: 0.8rem;
-    right: 0.5rem;
+    top: 0.4rem;
+    right: 0;
     width: auto;
     display: flex;
     align-items: end;
     justify-content: center;
     color: white;
     margin: 0;
-    border-radius: 4px;
     font-size: 0.8rem;
     text-transform: capitalize;
     align-self: flex-end;
@@ -382,19 +357,20 @@ body::after {
     display: inline-block;
     margin: 0 5px;
     padding: 0.2rem 1rem;
-    background: #2c2c2c;
+    background: #ffffff09;
     color: #d2d2d2;
-    border-radius: 100px;
+    border-radius: 8px;
     border: 1.5px solid rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(2px);
+    backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
-    box-shadow: 0 2px 8px rgba(255, 255, 255, 0.1);
+    box-shadow: 0 2px 8px rgba(255, 255, 255, 0.077);
     cursor: default;
 }
 
 /* Botón centrado */
 .product-item .cta-content button {
     padding: 0.5rem 0.5rem;
+    margin: 0.5rem 0;
     width: max-content;
     background: transparent;
     color: rgb(226, 226, 226);
@@ -422,8 +398,8 @@ body::after {
 /* Stock abajo */
 .product-item .stock {
     font-family: var(--title-font), Verdana, Geneva, Tahoma, sans-serif;
-    font-size: 1rem;
-    color: #ccc;
+    font-size: 0.8rem;
+    color: #999696;
 }
 
 .stock span {
@@ -973,6 +949,16 @@ body::after {
         height: 90%;
         padding: 1rem 1rem;
         margin: 1rem;
+    }
+
+    .modal-product-item{
+        padding: 0.5rem 0;
+        width: 90%;
+    }
+
+    .modal-product-list{
+        margin: 0;
+        padding: 0;
     }
 
     .modal-content form {
