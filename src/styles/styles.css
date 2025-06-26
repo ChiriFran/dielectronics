@@ -331,7 +331,6 @@ body::after {
     font-family: var(--title-font), sans-serif;
     font-weight: 700;
     margin: 0.5rem 0 1rem;
-    text-decoration: underline;
 }
 
 .button-row {
@@ -428,7 +427,6 @@ body::after {
     font-family: var(--title-font), Verdana, Geneva, Tahoma, sans-serif;
     font-size: 1rem;
     color: #ccc;
-    align-self: flex-end;
 }
 
 .stock span {
