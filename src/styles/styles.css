@@ -951,12 +951,12 @@ body::after {
         margin: 1rem;
     }
 
-    .modal-product-item{
+    .modal-product-item {
         padding: 0.5rem 0;
         width: 90%;
     }
 
-    .modal-product-list{
+    .modal-product-list {
         margin: 0;
         padding: 0;
     }
