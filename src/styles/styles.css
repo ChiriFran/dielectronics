@@ -73,6 +73,13 @@ body::after {
     font-family: var(--title-font);
 }
 
+/* spinner */
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
 /* productos de carga */
 .skeleton {
     opacity: 0.5;
