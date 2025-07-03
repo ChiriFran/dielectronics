@@ -10,10 +10,9 @@ function PurchaseModal({ onClose }) {
     const [telefono, setTelefono] = useState("");
     const [correo, setCorreo] = useState("");
     const [direccion, setDireccion] = useState("");
-    const [departamento, setDepartamento] = useState(""); // NUEVO CAMPO
+    const [departamento, setDepartamento] = useState("");
     const [localidad, setLocalidad] = useState("");
     const [dni, setDni] = useState("");
-
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -23,6 +22,7 @@ function PurchaseModal({ onClose }) {
     const [pedidoEnviado, setPedidoEnviado] = useState(false);
     const [confirmado, setConfirmado] = useState(false);
     const [mensajeWsp, setMensajeWsp] = useState("");
+    const [ultimoTotal, setUltimoTotal] = useState(0); // nuevo estado
 
     const { cartItems, clearCart, removeFromCart } = useContext(CartContext);
     const total = cartItems.reduce((acc, item) => acc + item.precio * item.cantidad, 0);
@@ -30,9 +30,16 @@ function PurchaseModal({ onClose }) {
     useEffect(() => {
         setTimeout(() => setVisible(true), 10);
         checkStockAgotado();
-    }, []);
 
-    const normalizarNombre = (nombre) => nombre.trim().toLowerCase().replace(/\s+/g, "-");
+        // Recuperar total del pedido desde localStorage si existe
+        const totalGuardado = localStorage.getItem("ultimoTotalPedido");
+        if (totalGuardado) {
+            setUltimoTotal(Number(totalGuardado));
+        }
+    }, [pedidoEnviado]);
+
+    const normalizarNombre = (nombre) =>
+        nombre.trim().toLowerCase().replace(/\s+/g, "-");
 
     const checkStockAgotado = async () => {
         const agotados = [];
@@ -78,13 +85,11 @@ function PurchaseModal({ onClose }) {
         for (const item of cartItems) {
             const ref = doc(db, "productos", normalizarNombre(item.titulo));
             const snap = await getDoc(ref);
-            if (!snap.exists()) {
-                return `El producto "${item.titulo}" ya no existe.`;
-            }
+            if (!snap.exists()) return `El producto "${item.titulo}" ya no existe.`;
             const { cantidad = 0, reservados = 0 } = snap.data();
             const stockDisponible = cantidad - reservados;
             if (stockDisponible < item.cantidad) {
-                return `El producto "${item.titulo}" no tiene suficiente stock. Disponible: ${stockDisponible}, Solicitado: ${item.cantidad}`;
+                return `El producto "${item.titulo}" no tiene suficiente stock.`;
             }
         }
         return null;
@@ -135,14 +140,13 @@ function PurchaseModal({ onClose }) {
         setVisible(false);
         setTimeout(() => {
             onClose();
-            // Limpiar campos y estados
             setNombre("");
             setTelefono("");
             setCorreo("");
             setDireccion("");
             setDepartamento("");
-            setCiudad("");
-            setCodigoPostal("");
+            setLocalidad("");
+            setDni("");
             setError(null);
             setProductosAgotados([]);
             setPedidoId("");
@@ -151,16 +155,17 @@ function PurchaseModal({ onClose }) {
             setConfirmado(false);
             setMensajeWsp("");
             setLoading(false);
+            setUltimoTotal(0);
+            localStorage.removeItem("ultimoTotalPedido");
         }, 200);
     };
 
     const copiarMensajeAlPortapapeles = async () => {
         try {
             await navigator.clipboard.writeText(mensajeWsp);
-            alert("Mensaje copiado al portapapeles y orden generada ✅");
+            alert("Mensaje copiado al portapapeles ✅");
         } catch (err) {
-            console.error("Error al copiar:", err);
-            alert("No se pudo copiar el mensaje. Intentalo manualmente.");
+            alert("No se pudo copiar el mensaje.");
         }
     };
 
@@ -180,9 +185,8 @@ function PurchaseModal({ onClose }) {
             return;
         }
 
-
         if (!confirmado) {
-            setError("Debes confirmar que enviarás el comprobante antes de continuar.");
+            setError("Debes confirmar que enviarás el comprobante.");
             setLoading(false);
             return;
         }
@@ -206,80 +210,72 @@ function PurchaseModal({ onClose }) {
 
             await guardarPedido(docId, fecha);
             await reservarProductos();
+            localStorage.setItem("ultimoTotalPedido", total.toString());
             clearCart();
 
             const mensajeWhatsApp = `
-¡Hola BAWAX! Realicé una pedido en la tienda.
-🧾 ID del Pedido: ${docId}
+¡Hola DIELECTRONICS! Realicé un pedido.
+🧾 ID: ${docId}
 📌 Fecha: ${fecha}
-👤 Nombre: ${nombre} -  DNI: ${dni}
-📧 Email: ${correo}
-📱 Teléfono: ${telefono}
---------------------------
-🏠 Dirección de envío: ${direccion}${departamento ? `, (${departamento})` : " (casa)"}, ${localidad}
---------------------------
-🛒 Productos:
-${cartItems.map(p => `- ${p.cantidad} x ${p.titulo} ($${p.precio * p.cantidad})`).join("\n")}
+👤 ${nombre} - DNI: ${dni}
+📧 ${correo}
+📱 ${telefono}
+🏠 ${direccion}${departamento ? `, (${departamento})` : " (casa)"}, ${localidad}
+🛒 ${cartItems.map(p => `- ${p.cantidad} x ${p.titulo} ($${p.precio * p.cantidad})`).join("\n")}
 💰 Total: $${total}
-
-👉 Adjunto el comprobante de pago para continuar con la confirmación del pedido.
---------------------------
-      `.trim();
+👉 Adjunto comprobante de pago.
+`.trim();
 
             setPedidoEnviado(true);
             setPedidoId(docId);
             setFechaPedido(fecha);
             setMensajeWsp(mensajeWhatsApp);
+            setUltimoTotal(total);
             setLoading(false);
-
-            const url = `https://wa.me/541130504515?text=${encodeURIComponent(mensajeWhatsApp)}`;
-            window.open(url, "_blank");
         } catch (err) {
-            console.error("Error al enviar pedido:", err);
-            setError("Hubo un error al enviar el pedido. Intente nuevamente.");
+            setError("Hubo un error al enviar el pedido.");
             setLoading(false);
         }
     };
 
+    const obtenerLinkDePagoLibre = () => "https://link.mercadopago.com.ar/buenosaireswax";
     return (
-        <div
-            className={`modal-backdrop ${visible ? "visible" : ""}`}
-            ref={backdropRef}
-            onClick={handleClickOutside}
-        >
+        <div className={`modal-backdrop ${visible ? "visible" : ""}`} ref={backdropRef} onClick={handleClickOutside}>
             <div className={`modal ${visible ? "fade-in" : "fade-out"}`}>
                 <div className="modal-content">
-                    <button className="close" onClick={handleClose}>
-                        ×
-                    </button>
+                    <button className="close" onClick={handleClose}>×</button>
 
                     {pedidoEnviado ? (
                         <>
-                            <h2 className="modalTitle">✅ Pedido armado con éxito</h2>
-                            <p className="modalText">
-                                🧾 Tu número de pedido es: <br /> <strong>{pedidoId}</strong>
-                            </p>
-                            <br />
-                            <p className="modalText">
-                                <strong>Adjuntá el comprobante de pago por WhatsApp</strong>
-                            </p>
+                            <h2 className="modalTitle">✅ Orden generada correctamente</h2>
+                            <p className="modalText">🧾 Número de orden: <br /> <strong>{pedidoId}</strong></p>
+                            <p className="modalText">💰 <strong>Total del pedido: <br /> </strong> ${ultimoTotal}</p>
+                            <p className="modalText"><strong>Realizá el pago para continuar</strong></p>
+
+                            <a
+                                href={obtenerLinkDePagoLibre()}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="btn-pago"
+                            >
+                                💳 Pagar con Mercado Pago
+                            </a>
+
                             <button
                                 className="btn-whatsapp-succes"
                                 onClick={() => {
-                                    const url = `https://wa.me/541130504515?text=${encodeURIComponent(
-                                        mensajeWsp
-                                    )}`;
+                                    const url = `https://wa.me/541130504515?text=${encodeURIComponent(mensajeWsp)}`;
                                     window.open(url, "_blank");
                                 }}
                             >
-                                Enviar pedido por WhatsApp
+                                📲 Enviar pedido por WhatsApp
                             </button>
 
                             <button className="btn-copiar" onClick={copiarMensajeAlPortapapeles}>
                                 📋 Copiar orden de compra
                             </button>
 
-                            <p className="modalText">Di electronics Arg .</p>
+                            <p className="modalText">Di electronics Arg.</p>
                         </>
                     ) : (
                         <>
@@ -290,8 +286,7 @@ ${cartItems.map(p => `- ${p.cantidad} x ${p.titulo} ($${p.precio * p.cantidad})`
                                 {cartItems.map((item) => (
                                     <li
                                         key={item.id}
-                                        className={`modal-product-item ${productosAgotados.includes(item.id) ? "agotado" : ""
-                                            }`}
+                                        className={`modal-product-item ${productosAgotados.includes(item.id) ? "agotado" : ""}`}
                                     >
                                         <div>
                                             <strong>{item.titulo}</strong> <br />
@@ -311,7 +306,7 @@ ${cartItems.map(p => `- ${p.cantidad} x ${p.titulo} ($${p.precio * p.cantidad})`
                             {productosAgotados.length > 0 && (
                                 <>
                                     <p className="productoAgotadoMensaje">
-                                        Debido a la alta demanda, algunos productos están agotados. Puedes eliminarlos rápidamente para continuar con tu compra sin inconvenientes.
+                                        Algunos productos están agotados. Podés eliminarlos para continuar.
                                     </p>
                                     <button onClick={eliminarProductosAgotados} className="btn-eliminar-agotados">
                                         Eliminar productos agotados
@@ -332,61 +327,14 @@ ${cartItems.map(p => `- ${p.cantidad} x ${p.titulo} ($${p.precio * p.cantidad})`
                                     enviarPedidoYRedirigirWsp();
                                 }}
                             >
-                                <input
-                                    type="text"
-                                    placeholder="Nombre"
-                                    value={nombre}
-                                    onChange={(e) => setNombre(e.target.value)}
-                                    required
-                                    disabled={loading}
-                                />
-                                <input
-                                    type="tel"
-                                    placeholder="Teléfono"
-                                    value={telefono}
-                                    onChange={(e) => setTelefono(e.target.value.replace(/\D/g, ""))}
-                                    required
-                                    disabled={loading}
-                                />
-                                <input
-                                    type="email"
-                                    placeholder="Email"
-                                    value={correo}
-                                    onChange={(e) => setCorreo(e.target.value)}
-                                    required
-                                    disabled={loading}
-                                />
-                                <input
-                                    type="text"
-                                    placeholder="Dirección de envío"
-                                    value={direccion}
-                                    onChange={(e) => setDireccion(e.target.value)}
-                                    required
-                                    disabled={loading}
-                                />
-                                <input
-                                    type="text"
-                                    placeholder="Localidad"
-                                    value={localidad}
-                                    onChange={(e) => setLocalidad(e.target.value)}
-                                    required
-                                    disabled={loading}
-                                />
-                                <input
-                                    type="text"
-                                    placeholder="DNI"
-                                    value={dni}
-                                    onChange={(e) => setDni(e.target.value.replace(/\D/g, ""))}
-                                    required
-                                    disabled={loading}
-                                />
-                                <input
-                                    type="text"
-                                    placeholder="Piso y Departamento (opcional)"
-                                    value={departamento}
-                                    onChange={(e) => setDepartamento(e.target.value)}
-                                    disabled={loading}
-                                />
+                                <input type="text" placeholder="Nombre" value={nombre} onChange={(e) => setNombre(e.target.value)} required disabled={loading} />
+                                <input type="tel" placeholder="Teléfono" value={telefono} onChange={(e) => setTelefono(e.target.value.replace(/\D/g, ""))} required disabled={loading} />
+                                <input type="email" placeholder="Email" value={correo} onChange={(e) => setCorreo(e.target.value)} required disabled={loading} />
+                                <input type="text" placeholder="Dirección de envío" value={direccion} onChange={(e) => setDireccion(e.target.value)} required disabled={loading} />
+                                <input type="text" placeholder="Localidad" value={localidad} onChange={(e) => setLocalidad(e.target.value)} required disabled={loading} />
+                                <input type="text" placeholder="DNI" value={dni} onChange={(e) => setDni(e.target.value.replace(/\D/g, ""))} required disabled={loading} />
+                                <input type="text" placeholder="Piso y Departamento (opcional)" value={departamento} onChange={(e) => setDepartamento(e.target.value)} disabled={loading} />
+
                                 {error && <p className="form-error">{error}</p>}
 
                                 <p className="modalText">
@@ -409,7 +357,7 @@ ${cartItems.map(p => `- ${p.cantidad} x ${p.titulo} ($${p.precio * p.cantidad})`
                                     type="submit"
                                     disabled={loading || productosAgotados.length > 0}
                                 >
-                                    {loading ? "Redireccion..." : "Enviar pedido por WhatsApp"}
+                                    {loading ? "Procesando..." : "Crear orden"}
                                 </button>
                             </form>
                         </>
