@@ -11,8 +11,8 @@ function PurchaseModal({ onClose }) {
     const [correo, setCorreo] = useState("");
     const [direccion, setDireccion] = useState("");
     const [departamento, setDepartamento] = useState("");
-    const [localidad, setLocalidad] = useState("");
-    const [dni, setDni] = useState("");
+    const [ciudad, setCiudad] = useState("");
+    const [codigoPostal, setCodigoPostal] = useState("");
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -22,7 +22,9 @@ function PurchaseModal({ onClose }) {
     const [pedidoEnviado, setPedidoEnviado] = useState(false);
     const [confirmado, setConfirmado] = useState(false);
     const [mensajeWsp, setMensajeWsp] = useState("");
-    const [ultimoTotal, setUltimoTotal] = useState(0); // nuevo estado
+    const [ultimoTotal, setUltimoTotal] = useState(0);
+    const [showCloseConfirm, setShowCloseConfirm] = useState(false);
+    const [animateCloseConfirm, setAnimateCloseConfirm] = useState(false);
 
     const { cartItems, clearCart, removeFromCart } = useContext(CartContext);
     const total = cartItems.reduce((acc, item) => acc + item.precio * item.cantidad, 0);
@@ -30,12 +32,8 @@ function PurchaseModal({ onClose }) {
     useEffect(() => {
         setTimeout(() => setVisible(true), 10);
         checkStockAgotado();
-
-        // Recuperar total del pedido desde localStorage si existe
         const totalGuardado = localStorage.getItem("ultimoTotalPedido");
-        if (totalGuardado) {
-            setUltimoTotal(Number(totalGuardado));
-        }
+        if (totalGuardado) setUltimoTotal(Number(totalGuardado));
     }, [pedidoEnviado]);
 
     const normalizarNombre = (nombre) =>
@@ -61,7 +59,6 @@ function PurchaseModal({ onClose }) {
 
     const eliminarProductosAgotados = async () => {
         const nuevosAgotados = [];
-
         for (const item of cartItems) {
             const ref = doc(db, "productos", normalizarNombre(item.titulo));
             const snap = await getDoc(ref);
@@ -75,7 +72,6 @@ function PurchaseModal({ onClose }) {
                 nuevosAgotados.push(item.id);
             }
         }
-
         nuevosAgotados.forEach((id) => removeFromCart(id));
         setProductosAgotados(nuevosAgotados);
         setError(null);
@@ -109,8 +105,8 @@ function PurchaseModal({ onClose }) {
             correo,
             direccion,
             departamento,
-            localidad,
-            dni,
+            ciudad,
+            codigoPostal,
             productos: cartItems.map((p) => ({
                 titulo: p.titulo,
                 categoria: p.categoria,
@@ -136,7 +132,7 @@ function PurchaseModal({ onClose }) {
         }
     };
 
-    const handleClose = () => {
+    const cerrarModal = () => {
         setVisible(false);
         setTimeout(() => {
             onClose();
@@ -145,8 +141,41 @@ function PurchaseModal({ onClose }) {
             setCorreo("");
             setDireccion("");
             setDepartamento("");
-            setLocalidad("");
-            setDni("");
+            setCiudad("");
+            setCodigoPostal("");
+            setError(null);
+            setProductosAgotados([]);
+            setPedidoId("");
+            setFechaPedido("");
+            setPedidoEnviado(false);
+            setConfirmado(false);
+            setMensajeWsp("");
+            setLoading(false);
+            setUltimoTotal(0);
+            localStorage.removeItem("ultimoTotalPedido");
+        }, 200);
+    };
+
+    const handleClose = () => {
+        if (pedidoEnviado) {
+            setShowCloseConfirm(true); // solo si ya se generó el pedido
+            return;
+        }
+
+        cerrarModalDefinitivo();
+    };
+
+    const cerrarModalDefinitivo = () => {
+        setVisible(false);
+        setTimeout(() => {
+            onClose();
+            setNombre("");
+            setTelefono("");
+            setCorreo("");
+            setDireccion("");
+            setDepartamento("");
+            setCiudad("");
+            setCodigoPostal("");
             setError(null);
             setProductosAgotados([]);
             setPedidoId("");
@@ -164,7 +193,7 @@ function PurchaseModal({ onClose }) {
         try {
             await navigator.clipboard.writeText(mensajeWsp);
             alert("Mensaje copiado al portapapeles ✅");
-        } catch (err) {
+        } catch {
             alert("No se pudo copiar el mensaje.");
         }
     };
@@ -179,7 +208,7 @@ function PurchaseModal({ onClose }) {
             return;
         }
 
-        if (!direccion.trim() || !localidad.trim() || !dni.trim()) {
+        if (!direccion.trim() || !ciudad.trim() || !codigoPostal.trim()) {
             setError("Por favor, completá todos los datos de envío.");
             setLoading(false);
             return;
@@ -214,17 +243,18 @@ function PurchaseModal({ onClose }) {
             clearCart();
 
             const mensajeWhatsApp = `
-¡Hola DIELECTRONICS! Realicé un pedido.
-🧾 ID: ${docId}
+¡Hola DIELECTRONIS.ARG! Realicé un pedido.
+🧾 ID del Pedido: ${docId}
 📌 Fecha: ${fecha}
-👤 ${nombre} - DNI: ${dni}
-📧 ${correo}
-📱 ${telefono}
-🏠 ${direccion}${departamento ? `, (${departamento})` : " (casa)"}, ${localidad}
-🛒 ${cartItems.map(p => `- ${p.cantidad} x ${p.titulo} ($${p.precio * p.cantidad})`).join("\n")}
+👤 Nombre: ${nombre}
+📧 Email: ${correo}
+📱 Teléfono: ${telefono}
+🏠 Dirección: ${direccion}${departamento ? `, (${departamento})` : " (casa)"}, ${ciudad} (${codigoPostal})
+🛒 Productos:
+${cartItems.map(p => `- ${p.cantidad} x ${p.titulo} ($${p.precio * p.cantidad})`).join("\n")}
 💰 Total: $${total}
-👉 Adjunto comprobante de pago.
-`.trim();
+👉 Adjunto el comprobante de pago.
+            `.trim();
 
             setPedidoEnviado(true);
             setPedidoId(docId);
@@ -239,43 +269,54 @@ function PurchaseModal({ onClose }) {
     };
 
     const obtenerLinkDePagoLibre = () => "https://link.mercadopago.com.ar/buenosaireswax";
+
     return (
         <div className={`modal-backdrop ${visible ? "visible" : ""}`} ref={backdropRef} onClick={handleClickOutside}>
             <div className={`modal ${visible ? "fade-in" : "fade-out"}`}>
                 <div className="modal-content">
-                    <button className="close" onClick={handleClose}>×</button>
-
+                    <button className="close" onClick={handleClose}>X</button>
                     {pedidoEnviado ? (
                         <>
-                            <h2 className="modalTitle">✅ Orden generada correctamente</h2>
-                            <p className="modalText">🧾 Número de orden: <br /> <strong>{pedidoId}</strong></p>
-                            <p className="modalText">💰 <strong>Total del pedido: <br /> </strong> ${ultimoTotal}</p>
-                            <p className="modalText"><strong>Realizá el pago para continuar</strong></p>
+                            <h2 className="modalTitle">✅ Pedido generado correctamente</h2>
+                            <p className="modalText">Segui los 2 pasos para finalizar tu compra de manera rapida</p>
+                            <p className="modalText">🧾 Número de orden:<br /><strong>{pedidoId}</strong></p>
+                            <p className="modalText"><strong>Total del pedido:</strong><br /> <span className="totalCheckout">${ultimoTotal}</span></p>
 
-                            <a
-                                href={obtenerLinkDePagoLibre()}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="btn-pago"
-                            >
+                            {/* Texto 1 */}
+                            <div className="info-box">
+                                <span>1</span> Ingresa el monto de tu orden, completá el pago y descarga el comprobante.
+                            </div>
+
+                            <a href={obtenerLinkDePagoLibre()} target="_blank" rel="noopener noreferrer" className="btn-pago">
                                 💳 Pagar con Mercado Pago
                             </a>
 
+                            {/* Texto 2 */}
+                            <div className="info-box">
+                                <span>2</span> Regresa y enviá el pedido generado y el comprobante de pago descargado.
+                            </div>
+
                             <button
                                 className="btn-whatsapp-succes"
-                                onClick={() => {
-                                    const url = `https://wa.me/541130504515?text=${encodeURIComponent(mensajeWsp)}`;
-                                    window.open(url, "_blank");
-                                }}
+                                onClick={() =>
+                                    window.open(`https://wa.me/541130504515?text=${encodeURIComponent(mensajeWsp)}`, "_blank")
+                                }
                             >
                                 📲 Enviar pedido por WhatsApp
                             </button>
 
+                            {/* Texto final */}
+                            <div className="info-box">
+                                ¡Listo! Nos contactaremos para mantenerte al tanto de todo.
+                            </div>
+
+                            <p className="modalText copiarPortapapeles">Podés copiar y guardar tu pedido en el portapapeles</p>
+
                             <button className="btn-copiar" onClick={copiarMensajeAlPortapapeles}>
-                                📋 Copiar orden de compra
+                                📋 Copiar
                             </button>
 
-                            <p className="modalText">Di electronics Arg.</p>
+                            <p className="modalText">Dielectronics.arg</p>
                         </>
                     ) : (
                         <>
@@ -297,7 +338,7 @@ function PurchaseModal({ onClose }) {
                                             className="delete-btn"
                                             title="Quitar del carrito"
                                         >
-                                            ×
+                                            X
                                         </button>
                                     </li>
                                 ))}
@@ -327,13 +368,61 @@ function PurchaseModal({ onClose }) {
                                     enviarPedidoYRedirigirWsp();
                                 }}
                             >
-                                <input type="text" placeholder="Nombre" value={nombre} onChange={(e) => setNombre(e.target.value)} required disabled={loading} />
-                                <input type="tel" placeholder="Teléfono" value={telefono} onChange={(e) => setTelefono(e.target.value.replace(/\D/g, ""))} required disabled={loading} />
-                                <input type="email" placeholder="Email" value={correo} onChange={(e) => setCorreo(e.target.value)} required disabled={loading} />
-                                <input type="text" placeholder="Dirección de envío" value={direccion} onChange={(e) => setDireccion(e.target.value)} required disabled={loading} />
-                                <input type="text" placeholder="Localidad" value={localidad} onChange={(e) => setLocalidad(e.target.value)} required disabled={loading} />
-                                <input type="text" placeholder="DNI" value={dni} onChange={(e) => setDni(e.target.value.replace(/\D/g, ""))} required disabled={loading} />
-                                <input type="text" placeholder="Piso y Departamento (opcional)" value={departamento} onChange={(e) => setDepartamento(e.target.value)} disabled={loading} />
+                                <input
+                                    type="text"
+                                    placeholder="Nombre"
+                                    value={nombre}
+                                    onChange={(e) => setNombre(e.target.value)}
+                                    required
+                                    disabled={loading}
+                                />
+                                <input
+                                    type="tel"
+                                    placeholder="Teléfono"
+                                    value={telefono}
+                                    onChange={(e) => setTelefono(e.target.value.replace(/\D/g, ""))}
+                                    required
+                                    disabled={loading}
+                                />
+                                <input
+                                    type="email"
+                                    placeholder="Email"
+                                    value={correo}
+                                    onChange={(e) => setCorreo(e.target.value)}
+                                    required
+                                    disabled={loading}
+                                />
+                                <input
+                                    type="text"
+                                    placeholder="Dirección de envío"
+                                    value={direccion}
+                                    onChange={(e) => setDireccion(e.target.value)}
+                                    required
+                                    disabled={loading}
+                                />
+                                <input
+                                    type="text"
+                                    placeholder="Ciudad"
+                                    value={ciudad}
+                                    onChange={(e) => setCiudad(e.target.value)}
+                                    required
+                                    disabled={loading}
+                                />
+                                <input
+                                    type="text"
+                                    placeholder="Código Postal"
+                                    value={codigoPostal}
+                                    onChange={(e) => setCodigoPostal(e.target.value)}
+                                    required
+                                    disabled={loading}
+                                />
+                                <input
+                                    type="text"
+                                    placeholder="Piso y Departamento (opcional)"
+                                    value={departamento}
+                                    onChange={(e) => setDepartamento(e.target.value)}
+                                    disabled={loading}
+                                />
 
                                 {error && <p className="form-error">{error}</p>}
 
@@ -362,6 +451,25 @@ function PurchaseModal({ onClose }) {
                             </form>
                         </>
                     )}
+
+                    {showCloseConfirm && (
+                        <div className={`confirm-overlay fade-in`}>
+                            <div className="confirm-box">
+                                <h3>Tu pedido fue generado.</h3>
+                                <p>Recuerda completar los pasos anteriores para finalizar tu compra</p>
+                                <p>
+                                    ⚠️ <span>
+                                        Al cerrar esta ventana no verás más los datos de pedido y pago.
+                                    </span>⚠️
+                                </p>
+                                <div className="confirm-actions">
+                                    <button className="btn-cancelar" onClick={() => setShowCloseConfirm(false)}>Cancelar</button>
+                                    <button className="btn-confirmar" onClick={cerrarModalDefinitivo}>Sí, cerrar</button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
                 </div>
             </div>
         </div>

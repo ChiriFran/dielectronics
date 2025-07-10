@@ -466,7 +466,8 @@ body::after {
 
 .modal-backdrop.visible {
     background: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(2px);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
     opacity: 1;
 }
 
@@ -476,7 +477,7 @@ body::after {
     border: 1px solid rgba(255, 255, 255, 0.1);
     /* borde difuso */
     backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(10px);
     /* compatibilidad Safari */
     box-shadow:
         0 2px 4px rgba(255, 255, 255, 0.05),
@@ -493,6 +494,7 @@ body::after {
     opacity: 0;
     transition: opacity 0.2s ease, transform 0.2s ease;
     overflow-y: auto;
+
 }
 
 .fade-in {
@@ -543,8 +545,18 @@ body::after {
     text-align: center;
 }
 
+.modalText:first-of-type {
+    width: 80%;
+    margin: 0 auto;
+    margin-bottom: 3rem;
+}
+
+.modalText:nth-of-type(2) {
+    text-align: start;
+}
+
 .modalText:nth-of-type(3) {
-    margin-top: 3rem;
+    margin-top: 4rem;
 }
 
 .modal-content form {
@@ -675,6 +687,7 @@ body::after {
 
 .btn-pago {
     display: block;
+    text-align: center;
     background-color: #009ee3;
     font-family: var(--title-font);
     color: rgb(55, 25, 25);
@@ -762,6 +775,27 @@ body::after {
     padding-left: 1rem;
 }
 
+.totalCheckout {
+    font-size: 2rem;
+    text-decoration: underline;
+}
+
+.info-box {
+    margin: 2rem 0;
+    font-weight: 400;
+    font-family: var(--title-font), Verdana;
+    font-size: 0.8rem;
+}
+
+.info-box span {
+    text-decoration: underline;
+    font-size: 4rem;
+}
+
+.modalText:last-of-type {
+    margin-top: 4rem;
+}
+
 .btn-whatsapp {
     display: inline-block;
     margin-top: 1rem;
@@ -786,6 +820,99 @@ body::after {
     border-radius: 6px;
     border: 1px solid #ccc;
     font-size: 1rem;
+}
+
+/* modal cerrar advertencia dentro del modal de carrito */
+.confirm-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeInConfirm 0.3s ease-out;
+    font-family: var(--title-font);
+}
+
+.confirm-box {
+    background: #1b1b1beb;
+    border-radius: 12px;
+    padding: 2rem;
+    max-width: 400px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    animation: scaleIn 0.3s ease-out;
+}
+
+.confirm-box h3 {
+    font-size: 1.5rem;
+}
+
+.confirm-box p {
+    text-align: center;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    width: 80%;
+    margin: 1rem auto;
+}
+
+.confirm-box p:last-of-type {
+    font-size: 1rem;
+    width: 100%;
+    margin-top: 2rem;
+}
+
+.confirm-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+    gap: 1rem;
+}
+
+.btn-cancelar {
+    background: #ccc;
+    color: black;
+    border: none;
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn-confirmar {
+    background: #e53935;
+    color: white;
+    border: none;
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+@keyframes fadeInConfirm {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        transform: scale(0.95);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 
 /* footer */
@@ -973,6 +1100,10 @@ body::after {
         margin: 1rem;
     }
 
+    .modalTitle {
+        margin-bottom: 3rem;
+    }
+
     .modal-product-item {
         padding: 0.5rem 0;
         width: 90%;
@@ -991,12 +1122,47 @@ body::after {
         font-size: 0.8rem;
     }
 
+    .modalText:first-of-type {
+        width: 100%;
+    }
+
+    .modalText:last-of-type {
+        margin-top: 4rem;
+    }
+
     .checkbox-confirmacion {
         font-size: 0.8rem;
+    }
+
+    .info-box {
+        margin: 3rem 0;
+    }
+
+    .info-box span {
+        font-size: 2.4rem;
     }
 
     .btn-whatsapp {
         width: 100%;
     }
 
+    .btn-pago {
+        width: 85%;
+        font-size: 0.8rem;
+    }
+
+    /* modal de confirmaion de cierre de carrito */
+    .confirm-box {
+        padding: 1rem;
+        max-width: 300px;
+    }
+
+    .confirm-box h3 {
+        font-size: 1.3rem;
+    }
+
+    .confirm-box p {
+        font-size: 0.8rem;
+        width: 100%;
+    }
 }
