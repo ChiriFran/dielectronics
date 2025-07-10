@@ -822,6 +822,13 @@ body::after {
     font-size: 1rem;
 }
 
+.copiarPortapapeles {
+    font-size: 0.8rem;
+    text-align: start;
+    display: inline;
+    margin-right: 0.5rem;
+}
+
 /* modal cerrar advertencia dentro del modal de carrito */
 .confirm-overlay {
     position: fixed;
