@@ -18,6 +18,13 @@
     gap: 0.5rem;
 }
 
+.footerName{
+    margin: 0;
+    font-size: 2rem;
+    font-family: var(--text-font);
+    padding: 0;
+}
+
 .footer-logo {
     height: 32px;
     filter: brightness(0);
@@ -29,6 +36,7 @@
     font-size: 13px;
     line-height: 130%;
     vertical-align: middle;
+    margin: 0 0.5rem;
 
 }
 

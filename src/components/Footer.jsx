@@ -13,8 +13,10 @@ function Footer() {
     return (
         <footer className="footer">
             <div className="footer-left">
-                <img src={logo} alt="BAWAX Logo" className="footer-logo" />
-                <p className="footer-description">Online Vinyl Record Store</p>
+                {/*                 <img src={logo} alt="BAWAX Logo" className="footer-logo" />
+ */}
+                <h3 className="footerName">dielectronics.ar</h3>
+                <p className="footer-description">Tienda de tecnologia online</p>
                 <a
                     href="https://www.instagram.com/buenosaireswax/"
                     target="_blank"
@@ -41,7 +43,7 @@ function Footer() {
                     CONTACTO
                 </a>
                 <a className="email" href="https://mail.google.com/mail/?view=cm&fs=1&to=buenosaireswax@gmail.com&su=Consulta:&body=Hola%20Bawax,%20me%20gustaría%20hacer%20una%20consulta:%0A%0ANombre:%0ATeléfono:%0ADetalle%20de%20la%20consulta:" target="_blank" rel="noopener noreferrer">
-                    buenosaireswax@gmail.com
+                    contacto@dielectronics.com.ar
                 </a>
 
                 <span className="footerAutor">Developed by eStock</span>
