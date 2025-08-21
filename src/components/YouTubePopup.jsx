@@ -47,11 +47,12 @@ const YouTubePopup = () => {
                 ✕
             </button>
 
-            <p className="youtubeTitle">Último drop 🎥🔥 Miralo ya!!!</p>
-
+            <p className="youtubeTitle">
+                Learn more about iPhone 16 Pro: <br />
+                <a href="https://www.apple.com/iphone-16-pro/" target="blank">Oficial Page</a> </p>
             <div className="popup-video">
                 <iframe
-                    src="https://www.youtube.com/embed/UZloKbF4mjw"
+                    src="https://www.youtube.com/embed/fm0a4uFS08Y"
                     title="YouTube Video"
                     frameBorder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -59,10 +60,10 @@ const YouTubePopup = () => {
                 ></iframe>
             </div>
 
-            <h3 className="popup-title">ABRIMOS CAJAS DE VINILOS DE HOUSE con CHIRI y GONZ | BAWAX DROP 004</h3>
+            <h3 className="popup-title">iPhone 16 Pro | All Systems Pro | Apple</h3>
 
             <a
-                href="https://www.youtube.com/watch?v=UZloKbF4mjw"
+                href="https://www.youtube.com/watch?v=fm0a4uFS08Y"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="popup-button"
