@@ -1,0 +1,146 @@
+.footer {
+    background-color: var(--color-fondo);
+    color: #282322;
+    background-color: #e4e4e4;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 2rem 5%;
+    font-family: var(--title-font, 'Courier New', Courier, monospace);
+    flex-wrap: wrap;
+    margin-top: 3rem;
+}
+
+.footer-left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+}
+
+.footer-logo {
+    height: 32px;
+    filter: brightness(0);
+}
+
+.footer-description {
+    font-family: var(--text-font);
+    font-weight: 300;
+    font-size: 13px;
+    line-height: 130%;
+    vertical-align: middle;
+
+}
+
+.footer-instagram {
+    width: 40px;
+    height: 40px;
+    margin-top: 0.5rem;
+    transition: transform 0.2s;
+}
+
+.footer-instagram:hover {
+    transform: scale(1.1);
+}
+
+.footer-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    text-align: right;
+}
+
+.footer-right a {
+    text-decoration: none;
+    color: #282322;
+    margin-top: 0.5rem;
+}
+
+.footer-right a:hover {
+    text-decoration: underline;
+}
+
+.footer-right p:last-of-type {
+    font-family: var(--text-font);
+    font-weight: 300;
+    font-style: Light;
+    font-size: 13px;
+    line-height: 130%;
+    letter-spacing: 0%;
+    text-align: right;
+    vertical-align: middle;
+
+}
+
+.faq-link {
+    background: none;
+    border: none;
+    color: #282322;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-family: Helvetica;
+    font-weight: 700;
+    font-style: Bold;
+    font-size: 16px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    vertical-align: middle;
+    text-transform: uppercase;
+}
+
+.contact-link {
+    color: #282322;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-family: Helvetica;
+    font-weight: 700;
+    font-style: Bold;
+    font-size: 16px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    vertical-align: middle;
+    text-transform: uppercase;
+}
+
+.email {
+    font-size: 0.75rem;
+}
+
+.footerAutor {
+    font-size: 0.75rem;
+    font-family: var(--text-font);
+    opacity: 0.3;
+    margin-top: 1rem;
+    width: 100%;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .footer {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .footer-left {
+        align-items: center;
+        text-align: center;
+    }
+
+    .footer-right {
+        width: 100%;
+        align-items: flex-start;
+        padding-left: 3%;
+        margin-top: 4rem;
+    }
+
+    .faq-link {
+        padding: 0;
+    }
+
+    .footerAutor {
+        text-align: start;
+        margin-top: 2rem;
+    }
+}

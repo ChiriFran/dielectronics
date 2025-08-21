@@ -1,44 +1,109 @@
+import { useMemo } from "react";
+import "../styles/styles.css";
+import '../styles/Filters.css'
+import searchIcon from "../../assets/icons/lupa.png";
+
 function Filters({
     filtroTexto,
     setFiltroTexto,
-    categoriaSeleccionada,
-    setCategoriaSeleccionada,
+    generoSeleccionado,
+    setGeneroSeleccionado,
+    estiloSeleccionado,
+    setEstiloSeleccionado,
+    selloSeleccionado,
+    setSelloSeleccionado,
+    autorSeleccionado,
+    setAutorSeleccionado,
+    verDisponibles,
+    setVerDisponibles,
     productos,
 }) {
-    const categorias = [...new Set(productos.map((p) => p.categoria).filter(Boolean))];
-    const autores = [...new Set(productos.map((p) => p.autor).filter(Boolean))];
+    const generos = useMemo(() => [...new Set(productos.map((p) => p.genero).filter(Boolean))], [productos]);
+    const estilos = useMemo(() => [...new Set(productos.map((p) => p.estilo).filter(Boolean))], [productos]);
+    const sellos = useMemo(() => [...new Set(productos.map((p) => p.sello).filter(Boolean))], [productos]);
+    const autores = useMemo(() => [...new Set(productos.map((p) => p.autor).filter(Boolean))], [productos]);
+
+    const limpiarFiltros = () => {
+        setFiltroTexto("");
+        setGeneroSeleccionado("");
+        setEstiloSeleccionado("");
+        setSelloSeleccionado("");
+        setAutorSeleccionado("");
+        setVerDisponibles(false);
+    };
 
     return (
-        <div className="filters">
-            <input
-                type="text"
-                placeholder="Buscar..."
-                value={filtroTexto}
-                onChange={(e) => setFiltroTexto(e.target.value)}
-            />
+        <div className="filters-container">
+            <div className="filters-group">
+                {/* Campo de búsqueda */}
+                <div className="search-input-container filters-item">
+                    <img src={searchIcon} alt="Buscar" className="search-icon" />
+                    <input
+                        type="text"
+                        placeholder="Buscar por título..."
+                        value={filtroTexto}
+                        onChange={(e) => setFiltroTexto(e.target.value)}
+                        className="search-input"
+                    />
+                </div>
 
-            <select
-                value={categoriaSeleccionada}
-                onChange={(e) => setCategoriaSeleccionada(e.target.value)}
-            >
-                <option value="">Todos</option>
+                {/* 🔹 Botón siempre antes que "Sellos" */}
+                <button
+                    className={`filters-item ${verDisponibles ? "activo" : ""}`}
+                    onClick={() => setVerDisponibles(!verDisponibles)}
+                >
+                    {verDisponibles ? "Ver Todos" : "Ver Disponibles"}
+                </button>
 
-                <optgroup label="Categorías">
-                    {categorias.map((cat) => (
-                        <option key={cat} value={cat}>
-                            {cat}
-                        </option>
+                <select
+                    value={estiloSeleccionado}
+                    onChange={(e) => setEstiloSeleccionado(e.target.value)}
+                    className="filters-item"
+                >
+                    <option value="">Estilos</option>
+                    {estilos.map((e) => (
+                        <option key={e} value={e}>{e}</option>
                     ))}
-                </optgroup>
+                </select>
 
-                <optgroup label="Autores">
-                    {autores.map((autor) => (
-                        <option key={autor} value={autor}>
-                            {autor}
-                        </option>
+                <select
+                    value={generoSeleccionado}
+                    onChange={(e) => setGeneroSeleccionado(e.target.value)}
+                    className="filters-item"
+                >
+                    <option value="">Géneros</option>
+                    {generos.map((g) => (
+                        <option key={g} value={g}>{g}</option>
                     ))}
-                </optgroup>
-            </select>
+                </select>
+
+                <select
+                    value={selloSeleccionado}
+                    onChange={(e) => setSelloSeleccionado(e.target.value)}
+                    className="filters-item"
+                >
+                    <option value="">Sellos</option>
+                    {sellos.map((s) => (
+                        <option key={s} value={s}>{s}</option>
+                    ))}
+                </select>
+
+                <select
+                    value={autorSeleccionado}
+                    onChange={(e) => setAutorSeleccionado(e.target.value)}
+                    className="filters-item"
+                >
+                    <option value="">Artistas</option>
+                    {autores.map((a) => (
+                        <option key={a} value={a}>{a}</option>
+                    ))}
+                </select>
+
+                {/* Botón limpiar */}
+                <button className="filters-clear-btn filters-item" onClick={limpiarFiltros}>
+                    Limpiar filtros
+                </button>
+            </div>
         </div>
     );
 }

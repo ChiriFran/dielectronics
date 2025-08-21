@@ -2,11 +2,14 @@ import { useEffect, useRef, useState, useContext } from "react";
 import { doc, setDoc, updateDoc, increment, getDoc } from "firebase/firestore";
 import { db } from "../firebase/config";
 import { CartContext } from "../context/CartContext";
+import '../styles/PurchaseModal.css'
 
 function PurchaseModal({ onClose }) {
     const backdropRef = useRef(null);
     const [visible, setVisible] = useState(false);
     const [nombre, setNombre] = useState("");
+    const [nombreInstagram, setNombreInstagram] = useState("");
+    const [dni, setDni] = useState("");
     const [telefono, setTelefono] = useState("");
     const [correo, setCorreo] = useState("");
     const [direccion, setDireccion] = useState("");
@@ -25,6 +28,10 @@ function PurchaseModal({ onClose }) {
     const [ultimoTotal, setUltimoTotal] = useState(0);
     const [showCloseConfirm, setShowCloseConfirm] = useState(false);
     const [animateCloseConfirm, setAnimateCloseConfirm] = useState(false);
+    const [metodoEntrega, setMetodoEntrega] = useState("");
+
+    const modalContentRef = useRef(null);
+    const modalRef = useRef(null);
 
     const { cartItems, clearCart, removeFromCart } = useContext(CartContext);
     const total = cartItems.reduce((acc, item) => acc + item.precio * item.cantidad, 0);
@@ -101,12 +108,15 @@ function PurchaseModal({ onClose }) {
     const guardarPedido = async (docId, fecha) => {
         const pedido = {
             cliente: nombre,
+            instagram: nombreInstagram,
+            dni,
             telefono,
             correo,
-            direccion,
+            direccion: metodoEntrega.includes("Retiro") ? "" : direccion,
             departamento,
             ciudad,
             codigoPostal,
+            metodoEntrega, // << nuevo campo agregado
             productos: cartItems.map((p) => ({
                 titulo: p.titulo,
                 categoria: p.categoria,
@@ -137,6 +147,8 @@ function PurchaseModal({ onClose }) {
         setTimeout(() => {
             onClose();
             setNombre("");
+            setNombreInstagram("");
+            setDni("");
             setTelefono("");
             setCorreo("");
             setDireccion("");
@@ -170,6 +182,8 @@ function PurchaseModal({ onClose }) {
         setTimeout(() => {
             onClose();
             setNombre("");
+            setNombreInstagram("");
+            setDni("");
             setTelefono("");
             setCorreo("");
             setDireccion("");
@@ -202,14 +216,16 @@ function PurchaseModal({ onClose }) {
         setLoading(true);
         setError(null);
 
-        if (productosAgotados.length > 0) {
-            setError("Revisá tus productos agotados antes de continuar.");
+        if (!metodoEntrega) {
+            setError("Seleccioná un método de entrega.");
             setLoading(false);
             return;
         }
 
-        if (!direccion.trim() || !ciudad.trim() || !codigoPostal.trim()) {
-            setError("Por favor, completá todos los datos de envío.");
+        const esRetiro = metodoEntrega.includes("Retiro");
+
+        if (!esRetiro && (!direccion.trim() || !ciudad.trim() || !codigoPostal.trim())) {
+            setError("Completá los datos de envío.");
             setLoading(false);
             return;
         }
@@ -243,18 +259,19 @@ function PurchaseModal({ onClose }) {
             clearCart();
 
             const mensajeWhatsApp = `
-¡Hola DIELECTRONIS.ARG! Realicé un pedido.
+¡Hola BAWAX! Realicé un pedido.
 🧾 ID del Pedido: ${docId}
 📌 Fecha: ${fecha}
-👤 Nombre: ${nombre}
+👤 Nombre: ${nombre} - ${dni}
 📧 Email: ${correo}
 📱 Teléfono: ${telefono}
-🏠 Dirección: ${direccion}${departamento ? `, (${departamento})` : " (casa)"}, ${ciudad} (${codigoPostal})
+📦 Método de entrega: ${metodoEntrega}
+${!esRetiro ? `🏠 Dirección: ${direccion}${departamento ? `, (${departamento})` : " (casa)"}, ${ciudad} (${codigoPostal})` : ""}
 🛒 Productos:
 ${cartItems.map(p => `- ${p.cantidad} x ${p.titulo} ($${p.precio * p.cantidad})`).join("\n")}
 💰 Total: $${total}
 👉 Adjunto el comprobante de pago.
-            `.trim();
+        `.trim();
 
             setPedidoEnviado(true);
             setPedidoId(docId);
@@ -270,36 +287,74 @@ ${cartItems.map(p => `- ${p.cantidad} x ${p.titulo} ($${p.precio * p.cantidad})`
 
     const obtenerLinkDePagoLibre = () => "https://link.mercadopago.com.ar/buenosaireswax";
 
+    useEffect(() => {
+        if (showCloseConfirm) {
+            // Scroll al inicio del modal
+            if (modalContentRef.current) {
+                modalContentRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+            }
+
+            // Bloquear scroll global y del modal
+            document.body.style.overflow = "hidden";
+            if (modalRef.current) {
+                modalRef.current.style.overflow = "hidden";
+            }
+        } else {
+            // Restaurar scroll global y del modal
+            document.body.style.overflow = "";
+            if (modalRef.current) {
+                modalRef.current.style.overflow = "auto";
+            }
+        }
+
+        return () => {
+            document.body.style.overflow = "";
+            if (modalRef.current) {
+                modalRef.current.style.overflow = "auto";
+            }
+        };
+    }, [showCloseConfirm]);
+
     return (
         <div className={`modal-backdrop ${visible ? "visible" : ""}`} ref={backdropRef} onClick={handleClickOutside}>
-            <div className={`modal ${visible ? "fade-in" : "fade-out"}`}>
-                <div className="modal-content">
-                    <button className="close" onClick={handleClose}>X</button>
+            <div className={`modal ${visible ? "fade-in" : "fade-out"}`} ref={modalRef}>
+                <div className="modal-content" ref={modalContentRef}>
+                    <button className="close" onClick={handleClose}>×</button>
                     {pedidoEnviado ? (
                         <>
-                            <h2 className="modalTitle">✅ Pedido generado correctamente</h2>
-                            <p className="modalText">Segui los 2 pasos para finalizar tu compra de manera rapida</p>
+                            <h2 className="modalTitle">✅ Pedido generado</h2>
+                            <p className="modalText">Finalizá tu compra: solo 2 pasos</p>
                             <p className="modalText">🧾 Número de orden:<br /><strong>{pedidoId}</strong></p>
-                            <p className="modalText"><strong>Total del pedido:</strong><br /> <span className="totalCheckout">${ultimoTotal}</span></p>
-
+                            <p className="modalText">
+                                <strong>Total del pedido:</strong><br />
+                                <span className="totalCheckout">
+                                    ${ultimoTotal.toLocaleString("es-AR", { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
+                                </span>
+                            </p>
                             {/* Texto 1 */}
                             <div className="info-box">
                                 <span>1</span> Ingresa el monto de tu orden, completá el pago y descarga el comprobante.
                             </div>
 
-                            <a href={obtenerLinkDePagoLibre()} target="_blank" rel="noopener noreferrer" className="btn-pago">
+                            {/*                             <a href={obtenerLinkDePagoLibre()} target="_blank" rel="noopener noreferrer" className="btn-pago">
                                 💳 Pagar con Mercado Pago
-                            </a>
+                            </a> */}
+
+                            <div className="infoPagoContainer">
+                                <p>Datos de deposito</p>
+                                <p>Alias: BuenosAiresWax</p>
+                                <p>Titular: Gonzalo Lijtenberg</p>
+                            </div>
 
                             {/* Texto 2 */}
                             <div className="info-box">
-                                <span>2</span> Regresa y enviá el pedido generado y el comprobante de pago descargado.
+                                <span>2</span>Envia el pedido generado y el comprobante de pago descargado.
                             </div>
 
                             <button
                                 className="btn-whatsapp-succes"
                                 onClick={() =>
-                                    window.open(`https://wa.me/541130504515?text=${encodeURIComponent(mensajeWsp)}`, "_blank")
+                                    window.open(`https://wa.me/541130115436?text=${encodeURIComponent(mensajeWsp)}`, "_blank")
                                 }
                             >
                                 📲 Enviar pedido por WhatsApp
@@ -310,18 +365,15 @@ ${cartItems.map(p => `- ${p.cantidad} x ${p.titulo} ($${p.precio * p.cantidad})`
                                 ¡Listo! Nos contactaremos para mantenerte al tanto de todo.
                             </div>
 
-                            <p className="modalText copiarPortapapeles">Podés copiar y guardar tu pedido en el portapapeles</p>
-
                             <button className="btn-copiar" onClick={copiarMensajeAlPortapapeles}>
-                                📋 Copiar
+                                Copiar pedido 📋
                             </button>
 
-                            <p className="modalText">Dielectronics.arg</p>
+                            <p className="modalText">Buenos Aires Wax</p>
                         </>
                     ) : (
                         <>
                             <h2 className="modalTitle">Resumen del pedido</h2>
-                            <p className="modalText">Verificá los productos antes de confirmar</p>
 
                             <ul className="modal-product-list">
                                 {cartItems.map((item) => (
@@ -329,16 +381,19 @@ ${cartItems.map(p => `- ${p.cantidad} x ${p.titulo} ($${p.precio * p.cantidad})`
                                         key={item.id}
                                         className={`modal-product-item ${productosAgotados.includes(item.id) ? "agotado" : ""}`}
                                     >
-                                        <div>
-                                            <strong>{item.titulo}</strong> <br />
-                                            {item.cantidad} x ${item.precio} = <strong>${item.precio * item.cantidad}</strong>
+                                        <div className="pedidoCarrito">
+                                            <img className="imagenCarrito" src={item.imagen} alt="" />
+                                            <div>
+                                                <strong>{item.titulo}</strong> <br />
+                                                {item.cantidad}u  <strong>${item.precio * item.cantidad}</strong>
+                                            </div>
                                         </div>
                                         <button
                                             onClick={() => removeFromCart(item.id)}
                                             className="delete-btn"
                                             title="Quitar del carrito"
                                         >
-                                            X
+                                            ×
                                         </button>
                                     </li>
                                 ))}
@@ -356,7 +411,10 @@ ${cartItems.map(p => `- ${p.cantidad} x ${p.titulo} ($${p.precio * p.cantidad})`
                             )}
 
                             <div className="totalContainer">
-                                <strong>Total:</strong> ${total}
+                                <strong>Total:</strong> ${total.toLocaleString("es-AR", {
+                                    minimumFractionDigits: 0,
+                                    maximumFractionDigits: 0
+                                })}
                             </div>
 
                             <p className="modalText">Formulario de Compra</p>
@@ -377,6 +435,22 @@ ${cartItems.map(p => `- ${p.cantidad} x ${p.titulo} ($${p.precio * p.cantidad})`
                                     disabled={loading}
                                 />
                                 <input
+                                    type="text"
+                                    placeholder="Intagram @"
+                                    value={nombreInstagram}
+                                    onChange={(e) => setNombreInstagram(e.target.value)}
+                                    required
+                                    disabled={loading}
+                                />
+                                <input
+                                    type="number"
+                                    placeholder="DNI"
+                                    value={dni}
+                                    onChange={(e) => setDni(e.target.value)}
+                                    required
+                                    disabled={loading}
+                                />
+                                <input
                                     type="tel"
                                     placeholder="Teléfono"
                                     value={telefono}
@@ -392,37 +466,58 @@ ${cartItems.map(p => `- ${p.cantidad} x ${p.titulo} ($${p.precio * p.cantidad})`
                                     required
                                     disabled={loading}
                                 />
-                                <input
-                                    type="text"
-                                    placeholder="Dirección de envío"
-                                    value={direccion}
-                                    onChange={(e) => setDireccion(e.target.value)}
-                                    required
-                                    disabled={loading}
-                                />
-                                <input
-                                    type="text"
-                                    placeholder="Ciudad"
-                                    value={ciudad}
-                                    onChange={(e) => setCiudad(e.target.value)}
-                                    required
-                                    disabled={loading}
-                                />
-                                <input
-                                    type="text"
-                                    placeholder="Código Postal"
-                                    value={codigoPostal}
-                                    onChange={(e) => setCodigoPostal(e.target.value)}
-                                    required
-                                    disabled={loading}
-                                />
-                                <input
-                                    type="text"
-                                    placeholder="Piso y Departamento (opcional)"
-                                    value={departamento}
-                                    onChange={(e) => setDepartamento(e.target.value)}
-                                    disabled={loading}
-                                />
+
+                                <label className="metodo-entrega-label">
+                                    Método de entrega:
+                                    <select
+                                        value={metodoEntrega}
+                                        onChange={(e) => setMetodoEntrega(e.target.value)}
+                                        required
+                                        disabled={loading}
+                                    >
+                                        <option value="" disabled>Seleccioná un medio de entrega</option>
+                                        <option value="Retiro por Microcentro">Retiro por Microcentro</option>
+                                        <option value="Retiro por Chacarita">Retiro por Chacarita</option>
+                                        <option value="Envío a domicilio (Andreani)">Envío a domicilio (Andreani)</option>
+                                    </select>
+                                </label>
+
+                                {metodoEntrega === "Envío a domicilio (Andreani)" && (
+
+                                    <>
+                                        <input
+                                            type="text"
+                                            placeholder="Calle y numero de envio"
+                                            value={direccion}
+                                            onChange={(e) => setDireccion(e.target.value)}
+                                            required
+                                            disabled={loading}
+                                        />
+                                        <input
+                                            type="text"
+                                            placeholder="Ciudad"
+                                            value={ciudad}
+                                            onChange={(e) => setCiudad(e.target.value)}
+                                            required
+                                            disabled={loading}
+                                        />
+                                        <input
+                                            type="text"
+                                            placeholder="Código Postal"
+                                            value={codigoPostal}
+                                            onChange={(e) => setCodigoPostal(e.target.value)}
+                                            required
+                                            disabled={loading}
+                                        />
+                                        <input
+                                            type="text"
+                                            placeholder="Piso y Departamento (opcional)"
+                                            value={departamento}
+                                            onChange={(e) => setDepartamento(e.target.value)}
+                                            disabled={loading}
+                                        />
+                                    </>
+                                )}
 
                                 {error && <p className="form-error">{error}</p>}
 
@@ -442,7 +537,7 @@ ${cartItems.map(p => `- ${p.cantidad} x ${p.titulo} ($${p.precio * p.cantidad})`
                                 </div>
 
                                 <button
-                                    className="btn-whatsapp"
+                                    className="btn-crear-orden"
                                     type="submit"
                                     disabled={loading || productosAgotados.length > 0}
                                 >

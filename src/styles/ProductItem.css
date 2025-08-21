@@ -1,0 +1,175 @@
+.product-card {
+    width: 349px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    font-family: 'Courier New', Courier, monospace;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Imagen cuadrada */
+.product-card .image {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    position: relative;
+    background: black;
+}
+
+.product-card .image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Botón ▶ flotante */
+.product-card .play-button {
+    position: absolute;
+    bottom: 8px;
+    left: 8px;
+    background: var(--color-letra);
+    color: var(--color-fondo);
+    padding: 4px 6px 1px 8px;
+    border-radius: 50%;
+    font-size: 1rem;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+/* Contenido de info */
+.product-card .info {
+    width: 100%;
+    padding: 1rem 0.8rem;
+    box-sizing: border-box;
+}
+
+
+.itemTitleContainer {
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+/* Botón flotante + */
+.product-card .add-button {
+    background: none;
+    color: var(--color-letra);
+    border: 1px solid var(--color-letra);
+    border-radius: 50%;
+    font-family: var(--text-font);
+    font-size: 1.5rem;
+    font-weight: 300;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    line-height: 26px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.product-card .add-button:hover {
+    background: var(--color-letra);
+    color: var(--color-fondo);
+}
+
+.product-card .info h3 {
+    font-size: 22px;
+    font-weight: lighter;
+    margin: 0;
+}
+
+.product-card .autor {
+    margin: 0;
+    opacity: 0.4;
+    font-size: 1rem;
+}
+
+.product-card .info .price {
+    font-size: 35px;
+    font-weight: lighter;
+    margin: 0 0 0.8rem;
+}
+
+.product-card .info .description {
+    font-family: var(--text-font);
+    font-size: 13px;
+    font-weight: 300;
+    font-style: Light;
+    font-size: 13px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    vertical-align: middle;
+}
+
+.product-card .info .sello {
+    font-family: var(--text-font);
+    font-size: 13px;
+    font-weight: 300;
+    font-style: Light;
+    font-size: 13px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    vertical-align: middle;
+    border-top: 1px solid #444;
+    border-bottom: 1px solid #444;
+    text-transform: uppercase;
+    padding: 0.5rem 0;
+}
+
+/* Stock */
+.product-card .stock {
+    font-size: 13px;
+    color: #8c8c8c;
+    margin-top: 0.5rem;
+}
+
+.product-card .stock span {
+    font-weight: bold;
+    color: #ccc;
+}
+
+/* Botón info FAQ */
+.product-card .faq-button {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    background: var(--color-letra);
+    color: var(--color-fondo);
+    border: 1px solid var(--color-fondo);
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    text-align: center;
+    font-size: 13px;
+    line-height: 22px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: .4s;
+}
+
+.product-card .faq-button:hover {
+    color: var(--color-letra);
+    background-color: var(--color-fondo);
+    transition: .2s;
+}
+
+.agotado {
+    text-decoration: line-through;
+    font-weight: bold;
+    opacity: 0.4;
+}
+
+.agotadoStock {
+    font-weight: bold;
+}
+
+.agotadoImagen {
+    opacity: 0.6;
+    /* Ejemplo: más tenue */
+    filter: grayscale(40%);
+    /* Ejemplo: un poco en blanco y negro */
+}
