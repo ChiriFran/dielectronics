@@ -60,7 +60,7 @@ function Filters({
                     onChange={(e) => setEstiloSeleccionado(e.target.value)}
                     className="filters-item"
                 >
-                    <option value="">Estilos</option>
+                    <option value="">Color</option>
                     {estilos.map((e) => (
                         <option key={e} value={e}>{e}</option>
                     ))}
@@ -71,7 +71,7 @@ function Filters({
                     onChange={(e) => setGeneroSeleccionado(e.target.value)}
                     className="filters-item"
                 >
-                    <option value="">Géneros</option>
+                    <option value="">Almacenamiento</option>
                     {generos.map((g) => (
                         <option key={g} value={g}>{g}</option>
                     ))}
@@ -82,7 +82,7 @@ function Filters({
                     onChange={(e) => setSelloSeleccionado(e.target.value)}
                     className="filters-item"
                 >
-                    <option value="">Sellos</option>
+                    <option value="">Modelo</option>
                     {sellos.map((s) => (
                         <option key={s} value={s}>{s}</option>
                     ))}
@@ -93,7 +93,7 @@ function Filters({
                     onChange={(e) => setAutorSeleccionado(e.target.value)}
                     className="filters-item"
                 >
-                    <option value="">Artistas</option>
+                    <option value="">Marca</option>
                     {autores.map((a) => (
                         <option key={a} value={a}>{a}</option>
                     ))}

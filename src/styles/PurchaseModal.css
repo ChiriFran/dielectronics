@@ -22,7 +22,7 @@
 }
 
 .modal {
-    background: var(--color-fondo);
+    background: var(--color-letra);
     /* fondo translúcido */
     border: 1px solid rgba(255, 255, 255, 0.1);
     /* borde difuso */
@@ -66,7 +66,7 @@
     background: none;
     font-size: 2rem;
     cursor: pointer;
-    color: var(--color-letra);
+    color: var(--color-fondo);
 }
 
 .pedidoCarrito {
@@ -137,13 +137,13 @@
     margin-top: 0.25rem;
     font-size: 1rem;
     color: #7c7a7a;
-    background-color: var(--color-fondo);
+    background-color: var(--color-letra);
     filter: brightness(90%);
 }
 
 .metodo-entrega-label select:focus {
-    background-color: #222;
-    color: #fff;
+    background-color: rgba(241, 240, 240, 0.848);
+    color: var(--color-fondo);
 }
 
 .modal-content form input,
@@ -159,7 +159,7 @@
 
 .modal-content form input {
     width: 48%;
-    background-color: rgba(28, 27, 27, 0.481);
+    background-color: rgba(241, 240, 240, 0.848);
 }
 
 .modal-content>form>input:nth-of-type(-n+5) {
@@ -222,7 +222,7 @@
 
 .delete-btn {
     border: none;
-    color: rgb(167, 167, 167);
+    color: rgb(90, 89, 89);
     background-color: transparent;
     font-size: 1.8rem;
     transition: .5s;
@@ -230,7 +230,7 @@
 }
 
 .delete-btn:hover {
-    color: rgb(231, 231, 231);
+    color: rgb(0, 0, 0);
     transition: .5s;
 }
 
@@ -260,17 +260,17 @@
     user-select: none;
     transition: .2s;
     text-decoration: underline;
+    color: var(--color-fondo);
 }
 
 .checkbox-confirmacion label:hover {
-    color: #fff;
+    color: #000000;
     transition: .2s;
 }
 
 .btn-crear-orden {
-    background-color: var(--color-letra);
-    opacity: 0.6;
-    color: var(--color-fondo);
+    background-color: var(--color-fondo);
+    color: var(--color-letra);
     font-family: var(--text-font);
     transition: .4s;
 }

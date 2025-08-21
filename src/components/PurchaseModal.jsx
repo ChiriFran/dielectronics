@@ -477,7 +477,7 @@ ${cartItems.map(p => `- ${p.cantidad} x ${p.titulo} ($${p.precio * p.cantidad})`
                                     >
                                         <option value="" disabled>Seleccioná un medio de entrega</option>
                                         <option value="Retiro por Microcentro">Retiro por Microcentro</option>
-                                        <option value="Retiro por Chacarita">Retiro por Chacarita</option>
+                                        <option value="Retiro por El Palomar">Retiro por El Palomar</option>
                                         <option value="Envío a domicilio (Andreani)">Envío a domicilio (Andreani)</option>
                                     </select>
                                 </label>

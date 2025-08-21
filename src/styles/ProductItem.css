@@ -57,8 +57,8 @@
 /* Botón flotante + */
 .product-card .add-button {
     background: none;
-    color: var(--color-letra);
-    border: 1px solid var(--color-letra);
+    color: var(--color-fondo);
+    border: 1px solid var(--color-fondo);
     border-radius: 50%;
     font-family: var(--text-font);
     font-size: 1.5rem;
