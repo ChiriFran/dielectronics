@@ -2,7 +2,6 @@ import { useEffect, useState, useContext } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "./firebase/config";
 import { CartContext } from "./context/CartContext";
-import Hero from "./components/Hero";
 import ProductList from "./components/ProductList";
 import PurchaseModal from "./components/PurchaseModal";
 import CartPopupButton from "./components/CartPopupButton";
@@ -15,7 +14,6 @@ import "./styles/styles.css";
 import logo from '../assets/logo/header-logo.png';
 import carritoVacio from '../assets/icons/carrito-vacio.svg';
 import carritoLleno from '../assets/icons/carrito-lleno.svg';
-import HeroYoutube from "./components/HeroYoutube";
 import HeroSlider from "./components/HeroSlider";
 
 function App() {
@@ -105,7 +103,7 @@ function App() {
 
       {!autenticado ? (
         <DropAccess
-          fechaObjetivo="2025-08-05T20:00:00"
+          fechaObjetivo="2025-09-05T20:00:00"
           onAccesoPermitido={manejarAutenticacion}
         />
       ) : (

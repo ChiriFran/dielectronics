@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import "../styles/DropAccess.css";
-import dropTitleImg from "../../assets/img/countdown.png";
+import dropTitleImg from "../../assets/logo/logo-dielectronics.png";
 
 function DropAccess({ fechaObjetivo, onAccesoPermitido, ocultarFormulario = false }) {
     const [tiempoRestante, setTiempoRestante] = useState("00:00:00:00");

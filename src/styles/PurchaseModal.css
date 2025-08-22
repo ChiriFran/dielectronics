@@ -395,6 +395,7 @@
     padding: 0.5rem;
     border-radius: 6px;
     border: 1px solid #ccc;
+    color: var(--color-fondo);
     font-size: 1rem;
 }
 
@@ -417,6 +418,7 @@
 .confirm-box {
     font-family: var(--text-font);
     background: #1b1b1beb;
+    color: var(--color-letra);
     border-radius: 12px;
     padding: 2rem;
     max-width: 400px;

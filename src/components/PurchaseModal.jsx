@@ -259,7 +259,7 @@ function PurchaseModal({ onClose }) {
             clearCart();
 
             const mensajeWhatsApp = `
-¡Hola BAWAX! Realicé un pedido.
+¡Hola Dielectronics! Realicé un pedido.
 🧾 ID del Pedido: ${docId}
 📌 Fecha: ${fecha}
 👤 Nombre: ${nombre} - ${dni}
@@ -342,8 +342,8 @@ ${cartItems.map(p => `- ${p.cantidad} x ${p.titulo} ($${p.precio * p.cantidad})`
 
                             <div className="infoPagoContainer">
                                 <p>Datos de deposito</p>
-                                <p>Alias: BuenosAiresWax</p>
-                                <p>Titular: Gonzalo Lijtenberg</p>
+                                <p>Alias: dielectronics.ar.mp</p>
+                                <p>Titular: Chiri Federico</p>
                             </div>
 
                             {/* Texto 2 */}
@@ -369,7 +369,7 @@ ${cartItems.map(p => `- ${p.cantidad} x ${p.titulo} ($${p.precio * p.cantidad})`
                                 Copiar pedido 📋
                             </button>
 
-                            <p className="modalText">Buenos Aires Wax</p>
+                            <p className="modalText">Dielectronics.ar</p>
                         </>
                     ) : (
                         <>

@@ -6,7 +6,7 @@ const preguntas = [
     {
         pregunta: "¿Dónde puedo hacer una consulta?",
         respuesta:
-            "Escribinos a buenosaireswax@gmail.com o por WhatsApp al +54 11 3011-5436.",
+            "Escribinos a dieletronics@gmail.com o por WhatsApp al +54 11 3011-5436.",
     },
     {
         pregunta: "¿Cuáles son los medios de pago?",
@@ -16,12 +16,12 @@ const preguntas = [
     {
         pregunta: "¿Cómo funcionan los envíos?",
         respuesta:
-            "Realizamos envíos a todo el país por Andreani. También podés retirar por Microcentro o Chacarita.",
+            "Realizamos envíos a todo el país por Andreani. También podés retirar por Microcentro o El Palomar.",
     },
     {
         pregunta: "¿Cómo puedo comprar?",
         respuesta:
-            "Agregás productos al carrito, completás tus datos y generás el pedido. Luego nos enviás el comprobante por WhatsApp.",
+            "Agregás productos al carrito, completás tus datos y generás el pedido, donde vas a poder finalizar el pago. Luego nos enviás el comprobante por WhatsApp.",
     },
     {
         pregunta: "¿Qué hago si realicé un pedido y no pude enviar el comprobante?",
