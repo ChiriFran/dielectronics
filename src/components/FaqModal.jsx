@@ -9,6 +9,11 @@ const preguntas = [
             "Escribinos a dieletronics@gmail.com o por WhatsApp al +54 11 3011-5436.",
     },
     {
+        pregunta: "¿Dónde comprobar la cobertura de la garantia?",
+        respuesta:
+            "Accede a la pagina oficial : https://checkcoverage.apple.com/?locale=en_ES y segui los simples pasos.",
+    },
+    {
         pregunta: "¿Cuáles son los medios de pago?",
         respuesta:
             "Aceptamos pagos con Mercado Pago a través de tarjeta de débito/crédito, transferencias bancarias y más.",

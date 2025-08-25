@@ -4,6 +4,7 @@ import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "../firebase/config";
 
 import FaqModal from "./FaqModal";
+import ProductModalEspec from "./ProductModalEspec"; // Nuevo modal para ver especificaciones
 
 import '../styles/ProductItem.css'
 
@@ -11,6 +12,7 @@ function ProductItem({ producto: productoProp, mostrarMensaje }) {
     const { cartItems, addToCart, removeFromCart } = useContext(CartContext);
     const [producto, setProducto] = useState(productoProp);
     const [mostrarFaq, setMostrarFaq] = useState(false);
+    const [mostrarEspecificaciones, setMostrarEspecificaciones] = useState(false);
 
     useEffect(() => {
         const ref = doc(db, "productos", productoProp.id);
@@ -45,18 +47,20 @@ function ProductItem({ producto: productoProp, mostrarMensaje }) {
 
     return (
         <div className="product-card">
-            <div className="image">
+            <div className="image" onClick={() => setMostrarEspecificaciones(true)}>
                 <img
                     src={producto.imagen}
                     alt={producto.titulo}
                     className={stockDisponible <= 0 ? "agotadoImagen" : ""}
-                />                {producto.escucha && (
+                />
+                {producto.escucha && (
                     <a
                         href={producto.escucha}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="play-button"
                         title="Escuchar"
+                        onClick={(e) => e.stopPropagation()} // evita que abra el modal al hacer click en "play"
                     >
                         ▶
                     </a>
@@ -99,6 +103,14 @@ function ProductItem({ producto: productoProp, mostrarMensaje }) {
                         <span> (En carrito: {cantidadEnCarrito})</span>
                     )}
                 </div>
+
+                {/* Botón ver especificaciones */}
+                <button
+                    className="specs-button"
+                    onClick={() => setMostrarEspecificaciones(true)}
+                >
+                    Ver especificaciones
+                </button>
             </div>
 
             {/* Botón flotante FAQ */}
@@ -111,9 +123,12 @@ function ProductItem({ producto: productoProp, mostrarMensaje }) {
             </div>
 
             {mostrarFaq && <FaqModal onClose={() => setMostrarFaq(false)} />}
+                
+            {mostrarEspecificaciones && (
+                <ProductModalEspec producto={producto} onClose={() => setMostrarEspecificaciones(false)} />
+            )}
         </div>
     );
-
 }
 
 export default ProductItem;
