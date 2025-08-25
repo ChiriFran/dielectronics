@@ -1,7 +1,7 @@
 .footer {
     background-color: var(--color-fondo);
     color: #282322;
-    background-color: #e4e4e4;
+    background-color: #fdfdfd;
     display: flex;
     justify-content: space-between;
     align-items: flex-end;

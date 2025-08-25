@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "../styles/LoaderOverlay.css";
-import logo from "../../assets/logo/logo-completo-negro.png"; // Ajustá el path si es necesario
+import logo from "../../assets/logo/logo-dielectronics.png"; // Ajustá el path si es necesario
 
 const LoaderOverlay = ({ visible }) => {
     const [shouldRender, setShouldRender] = useState(visible);

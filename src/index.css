@@ -5,14 +5,14 @@
 
   color-scheme: light dark;
   color: #282322;
-  background-color: #e4e4e4;
+  background-color: #fdfdfd;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  --color-letra: #e4e4e4;
+  --color-letra: #fdfdfd;
   --color-fondo: #282322;
   --title-font:  'Helvetica';
   --text-font:  'DM Mono';

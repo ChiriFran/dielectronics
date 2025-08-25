@@ -11,7 +11,7 @@ import DropAccess from "./components/DropAccess";
 
 import "./styles/styles.css";
 
-import logo from '../assets/logo/header-logo.png';
+import logo from '../assets/logo/logo-dielectronics.png';
 import carritoVacio from '../assets/icons/carrito-vacio.svg';
 import carritoLleno from '../assets/icons/carrito-lleno.svg';
 import HeroSlider from "./components/HeroSlider";

@@ -14,7 +14,7 @@ const HeroYoutube = () => {
         >
             <div className="hero-youtube-overlay">
                 <div className="hero-youtube-content">
-                    <h4>Introducing iPhone 16 Pro | Apple</h4>
+                    <h4>Descubre el iPhone 16 Pro en detalle | Apple</h4>
                     <a
                         href={videoUrl}
                         target="_blank"

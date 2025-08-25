@@ -122,8 +122,7 @@ body {
 }
 
 .logo {
-    width: auto;
-    filter: brightness(10);
+    width: 150px;
 }
 
 .cartIcon {
@@ -135,6 +134,7 @@ body {
 .cartSVG {
     width: 40px;
     height: 40px;
+    filter: brightness(0);
 }
 
 .cartCount {
