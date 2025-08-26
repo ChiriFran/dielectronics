@@ -58,11 +58,16 @@
 @media (max-width: 767px) {
 
     .formulario-acceso {
-        height: 30svh;
+        height: 50svh;
     }
 
     .formulario-acceso label {
         font-size: 1.2rem;
+    }
+
+    .formulario-acceso p{
+        font-size: 0.8rem;
+        width: 80%;
     }
 
     .btn-enviar-countdown {
