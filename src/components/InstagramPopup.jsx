@@ -53,9 +53,9 @@ const InstagramPopup = () => {
                     src="https://www.instagram.com/p/DLOYDo3Nty_/embed"
                     width="100%"
                     height="100%"
-                    frameBorder="0"
+                    frameborder="0"
                     scrolling="no"
-                    allowTransparency="true"
+                    allowtransparency="true"
                     allow="encrypted-media; picture-in-picture"
                 ></iframe>
             </div>
