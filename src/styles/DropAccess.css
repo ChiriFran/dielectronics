@@ -10,26 +10,6 @@
     overflow: hidden;
 }
 
-.drop-title-image {
-    display: block;
-    max-width: 250px;
-    width: 100%;
-    height: auto;
-}
-
-.countdown {
-    color: #282322;
-    font-family: var(--text-font);
-    font-weight: 300;
-    font-size: 57.92px;
-    line-height: 100%;
-    text-align: center;
-    vertical-align: middle;
-    margin: 2rem 0;
-    min-height: 60px;
-    transition: .6s;
-}
-
 .formulario-acceso {
     display: flex;
     flex-direction: column;
@@ -38,20 +18,16 @@
 
 .formulario-acceso label {
     margin-top: 2rem;
-    font-size: 0.9rem;
-    margin-bottom: 0.5rem;
-    color: #aaa;
+    font-size: 2rem;
+    color: var(--color-fondo);
 }
 
-.formulario-acceso input {
-    padding: 0.5rem 0;
-    background-color: transparent;
-    color: var(--color-fondo);
-    outline: none;
+.formulario-acceso p{
+    width: 60%;
     font-size: 1rem;
-    text-align: center;
-    width: 100%;
-    border: 1px solid #FFFFFF
+    color: var(--color-fondo);
+    margin: 1rem;
+    margin-bottom: 2rem;
 }
 
 .btn-enviar-countdown {
@@ -62,12 +38,11 @@
     font-family: var(--text-font);
     border: none;
     cursor: pointer;
-    width: 100%;
+    width: 40%;
 }
 
 .btn-enviar-countdown:hover {
     background-color: var(--color-fondo);
-    /* azul más oscuro al pasar el mouse */
 }
 
 .error {
@@ -81,11 +56,16 @@
 }
 
 @media (max-width: 767px) {
-    .drop-title-image {
-        max-width: 180px;
+
+    .formulario-acceso {
+        height: 30svh;
     }
 
-    .countdown {
-        font-size: 47.92px;
+    .formulario-acceso label {
+        font-size: 1.2rem;
+    }
+
+    .btn-enviar-countdown {
+        width: 60%;
     }
 }
