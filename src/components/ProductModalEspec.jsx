@@ -44,11 +44,10 @@ function ProductModalEspec({ producto, onClose }) {
                     {/* Texto */}
                     <div className="specifications-text">
                         <h2>{producto.titulo}</h2>
-                        <p><strong>Autor:</strong> {producto.autor}</p>
+                        <p><strong>Fabricante:</strong> {producto.marca}</p>
                         <p><strong>Precio:</strong> ${producto.precio.toLocaleString("es-AR")}</p>
                         <p><strong>Descripción:</strong> {producto.descripcion}</p>
-                        <p><strong>Estilo:</strong> {producto.estilo}</p>
-                        <p><strong>Label:</strong> {producto.sello}</p>
+                        <p><strong>Alamcenamiento:</strong> {producto.especificacionesAlmacenamiento}</p>
                         <p><strong>Stock disponible:</strong> {producto.cantidad - (producto.reservados ?? 0)}</p>
                     </div>
                 </div>
@@ -59,9 +58,9 @@ function ProductModalEspec({ producto, onClose }) {
 
                 {/* Especificaciones extra */}
                 <div className="specifications-extra">
-                    {producto.especificaciones1 && <p>{producto.especificaciones1}</p>}
-                    {producto.especificaciones2 && <p>{producto.especificaciones2}</p>}
-                    {producto.especificaciones3 && <p>{producto.especificaciones3}</p>}
+                    {producto.especificacionesAcabado && <p>{producto.especificacionesAcabado}</p>}
+                    {producto.especificacionesChip && <p>{producto.especificacionesChip}</p>}
+                    {producto.especificacionesCaja && <p>{producto.especificacionesCaja}</p>}
                 </div>
             </div>
         </div>
