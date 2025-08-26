@@ -4,7 +4,7 @@
     right: 20px;
     width: 60px;
     height: 60px;
-    background: rgba(37, 37, 37, 0.747);
+    background: rgba(37, 37, 37, 0.247);
     /* fondo translúcido tipo vidrio */
     border: none;
     backdrop-filter: blur(8px);
@@ -43,6 +43,7 @@
     width: 38px;
     height: 38px;
     pointer-events: none;
+    filter: brightness(0);
 }
 
 .cart-count {
@@ -50,7 +51,7 @@
     position: absolute;
     top: 6px;
     right: 6px;
-    background-color: #222;
+    background-color: #393939;
     border-radius: 50%;
     padding: 2px 2px;
     font-size: 12px;

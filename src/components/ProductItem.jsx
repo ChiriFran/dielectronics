@@ -53,18 +53,6 @@ function ProductItem({ producto: productoProp, mostrarMensaje }) {
                     alt={producto.titulo}
                     className={stockDisponible <= 0 ? "agotadoImagen" : ""}
                 />
-                {producto.escucha && (
-                    <a
-                        href={producto.escucha}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="play-button"
-                        title="Escuchar"
-                        onClick={(e) => e.stopPropagation()} // evita que abra el modal al hacer click en "play"
-                    >
-                        ▶
-                    </a>
-                )}
             </div>
 
             <div className="info">
@@ -72,17 +60,7 @@ function ProductItem({ producto: productoProp, mostrarMensaje }) {
                     <h3 className={stockDisponible <= 0 ? "agotado" : ""}>
                         {producto.titulo}
                     </h3>
-                    <button
-                        className="add-button"
-                        onClick={handleAdd}
-                        title="Agregar al carrito"
-                        disabled={stockDisponible <= 0}
-                    >
-                        {stockDisponible <= 0 ? "×" : "+"}
-                    </button>
                 </div>
-
-                <p className="autor">{producto.autor}</p>
 
                 <p className={`price ${stockDisponible <= 0 ? "agotado" : ""}`}>
                     ${producto.precio.toLocaleString("es-AR", { minimumFractionDigits: 0 })}
@@ -93,9 +71,33 @@ function ProductItem({ producto: productoProp, mostrarMensaje }) {
                         }`}
                 </p>
 
-                <h4 className="sello">
-                    Label: {producto.sello}
-                </h4>
+                {/* Botón ver especificaciones */}
+                <button
+                    className="specs-button"
+                    onClick={() => setMostrarEspecificaciones(true)}
+                >
+                    Ver mas info
+                </button>
+
+                <div className="button-container">
+                    <button
+                        className="add-button"
+                        onClick={handleAdd}
+                        title="Agregar al carrito"
+                        disabled={stockDisponible <= 0}
+                    >
+                        {stockDisponible <= 0 ? "Agotado" : "Agregar al carrito"}
+                    </button>
+
+                    <button
+                        className="remove-button"
+                        onClick={handleRemove}
+                        title="Eliminar del carrito"
+                        disabled={cantidadEnCarrito === 0}
+                    >
+                        Eliminar
+                    </button>
+                </div>
 
                 <div className={`stock ${stockDisponible <= 0 ? "agotadoStock" : ""}`}>
                     Stock: {stockDisponible > 0 ? stockDisponible : "AGOTADO"}
@@ -103,14 +105,6 @@ function ProductItem({ producto: productoProp, mostrarMensaje }) {
                         <span> (En carrito: {cantidadEnCarrito})</span>
                     )}
                 </div>
-
-                {/* Botón ver especificaciones */}
-                <button
-                    className="specs-button"
-                    onClick={() => setMostrarEspecificaciones(true)}
-                >
-                    Ver especificaciones
-                </button>
             </div>
 
             {/* Botón flotante FAQ */}
@@ -123,7 +117,7 @@ function ProductItem({ producto: productoProp, mostrarMensaje }) {
             </div>
 
             {mostrarFaq && <FaqModal onClose={() => setMostrarFaq(false)} />}
-                
+
             {mostrarEspecificaciones && (
                 <ProductModalEspec producto={producto} onClose={() => setMostrarEspecificaciones(false)} />
             )}

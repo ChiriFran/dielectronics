@@ -28,7 +28,6 @@
     margin: 1rem;
     max-width: 600px;
     width: 90%;
-    border-radius: 8px;
     position: relative;
     animation: modalIn 0.3s ease-out;
 }
