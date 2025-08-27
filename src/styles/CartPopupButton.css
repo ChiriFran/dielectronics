@@ -4,7 +4,7 @@
     right: 20px;
     width: 60px;
     height: 60px;
-    background: rgba(37, 37, 37, 0.247);
+    background: var(--color-letra);
     /* fondo translúcido tipo vidrio */
     border: none;
     backdrop-filter: blur(8px);

@@ -110,7 +110,7 @@
 }
 
 .product-card .info .price {
-    font-size: 35px;
+    font-size: 30px;
     font-weight: lighter;
     margin: 0 0 0.8rem;
 }
@@ -118,27 +118,7 @@
 .product-card .info .description {
     font-family: var(--text-font);
     font-size: 13px;
-    font-weight: 300;
-    font-style: Light;
-    font-size: 13px;
-    line-height: 100%;
-    letter-spacing: 0%;
-    vertical-align: middle;
-}
-
-.product-card .info .sello {
-    font-family: var(--text-font);
-    font-size: 13px;
-    font-weight: 300;
-    font-style: Light;
-    font-size: 13px;
-    line-height: 100%;
-    letter-spacing: 0%;
-    vertical-align: middle;
-    border-top: 1px solid #444;
-    border-bottom: 1px solid #444;
-    text-transform: uppercase;
-    padding: 0.5rem 0;
+    font-weight: 400;
 }
 
 /* Stock */

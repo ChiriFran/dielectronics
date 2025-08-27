@@ -28,21 +28,15 @@
     margin: 0;
     margin-left: -3rem;
     font-family: var(--title-font);
-    font-weight: 300;
     font-size: 15px;
     line-height: 0;
-    vertical-align: middle;
     text-transform: uppercase;
 }
 
 .hero-content h2 {
     font-family: var(--text-font);
-    font-weight: 300;
     font-size: 12px;
-    line-height: 100%;
-    letter-spacing: 0%;
-    vertical-align: middle;
-    margin-left: -1rem;
+    margin-left: -3rem;
 
 }
 

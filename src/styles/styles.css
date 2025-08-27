@@ -9,11 +9,11 @@
     letter-spacing: 0%;
     vertical-align: middle;
 }
+
 @font-face {
-    src: url(../../assets/fonts/Roboto-VariableFont_wdth\,wght.ttf);
+    src: url(../../assets/fonts/Roboto-VariableFont_wght.ttf) format("truetype");
     font-family: "Roboto";
-    font-weight: 400;
-    font-size: 17.97px;
+    font-weight: 500;
 }
 
 body {
