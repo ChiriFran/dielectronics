@@ -67,7 +67,7 @@ function ProductItem({ producto: productoProp, mostrarMensaje }) {
                 </p>
 
                 <p className="description">
-                    {`${(producto.descripcion + ' - ' + producto.estilo).slice(0, 150)}${(producto.descripcion + ' - ' + producto.estilo).length > 150 ? '...' : ''
+                    {`${(producto.descripcion).slice(0, 150)}${(producto.descripcion).length > 150 ? '...' : ''
                         }`}
                 </p>
 
