@@ -18,7 +18,7 @@ function ProductItem({ producto: productoProp, mostrarMensaje }) {
         const ref = doc(db, "productos", productoProp.id);
         const unsubscribe = onSnapshot(ref, (docSnap) => {
             if (docSnap.exists()) {
-                setProducto(docSnap.data());
+                setProducto({ id: docSnap.id, ...docSnap.data() }); // ✅ id incluido
             }
         });
         return () => unsubscribe();

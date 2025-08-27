@@ -25,18 +25,21 @@ function ProductModalEspec({ producto, onClose }) {
     const reservados = producto.reservados ?? 0;
     const stockDisponible = Math.max(0, cantidadTotal - reservados);
 
+    // Asegurar que el producto tenga siempre id
+    const productoConId = { id: producto.id, ...producto };
+
     // Saber cuánto hay en el carrito
-    const carritoItem = cartItems.find(item => item.id === producto.id);
+    const carritoItem = cartItems.find(item => item.id === productoConId.id);
     const cantidadEnCarrito = carritoItem ? carritoItem.cantidad : 0;
 
     const handleAdd = () => {
         if (cantidadEnCarrito >= stockDisponible) return;
-        addToCart(producto);
+        addToCart(productoConId);
     };
 
     const handleRemove = () => {
         if (cantidadEnCarrito === 0) return;
-        removeFromCart(producto.id);
+        removeFromCart(productoConId.id);
     };
 
     return (
@@ -65,7 +68,9 @@ function ProductModalEspec({ producto, onClose }) {
                     {/* Texto */}
                     <div className="specifications-text">
                         <h2>{producto.titulo}</h2>
-                        <p className="precioModal">${producto.precio.toLocaleString("es-AR")}</p>
+                        <p className="precioModal">
+                            ${producto.precio.toLocaleString("es-AR")}
+                        </p>
                         <p className="descripcionModal">{producto.descripcion}</p>
 
                         {/* Botones de carrito */}
@@ -88,7 +93,10 @@ function ProductModalEspec({ producto, onClose }) {
                         </div>
 
                         {/* Stock info */}
-                        <div className={`stockModal ${stockDisponible <= 0 ? "agotadoStockModal" : ""}`}>
+                        <div
+                            className={`stockModal ${stockDisponible <= 0 ? "agotadoStockModal" : ""
+                                }`}
+                        >
                             Stock: {stockDisponible > 0 ? stockDisponible : "AGOTADO"}
                             {cantidadEnCarrito > 0 && (
                                 <span> (En carrito: {cantidadEnCarrito})</span>
