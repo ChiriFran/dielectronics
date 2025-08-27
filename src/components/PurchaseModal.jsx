@@ -332,23 +332,24 @@ ${cartItems.map(p => `- ${p.cantidad} x ${p.titulo} ($${p.precio * p.cantidad})`
                                 </span>
                             </p>
                             {/* Texto 1 */}
-                            <div className="info-box">
+
+{/*                             <div className="info-box">
                                 <span>1</span> Ingresa el monto de tu orden, completá el pago y descarga el comprobante.
-                            </div>
+                            </div> */}
 
                             {/*                             <a href={obtenerLinkDePagoLibre()} target="_blank" rel="noopener noreferrer" className="btn-pago">
                                 💳 Pagar con Mercado Pago
                             </a> */}
 
-                            <div className="infoPagoContainer">
+{/*                             <div className="infoPagoContainer">
                                 <p>Datos de deposito</p>
                                 <p>Alias: dielectronics.ar.mp</p>
                                 <p>Titular: Chiri Federico</p>
-                            </div>
+                            </div> */}
 
                             {/* Texto 2 */}
                             <div className="info-box">
-                                <span>2</span>Envia el pedido generado y el comprobante de pago descargado.
+                                <span>1</span>¡Listo! Tu pedido ya fue confirmado y aparecera listo para ser enviado por whatsapp.
                             </div>
 
                             <button
@@ -362,14 +363,14 @@ ${cartItems.map(p => `- ${p.cantidad} x ${p.titulo} ($${p.precio * p.cantidad})`
 
                             {/* Texto final */}
                             <div className="info-box">
-                                ¡Listo! Nos contactaremos para mantenerte al tanto de todo.
+                                Nos contactaremos para mantenerte al tanto de todo por este mismo medio.
                             </div>
 
                             <button className="btn-copiar" onClick={copiarMensajeAlPortapapeles}>
                                 Copiar pedido 📋
                             </button>
 
-                            <p className="modalText">Dielectronics.ar</p>
+                            <p className="modalText">Dielectronics.arg</p>
                         </>
                     ) : (
                         <>
@@ -551,10 +552,10 @@ ${cartItems.map(p => `- ${p.cantidad} x ${p.titulo} ($${p.precio * p.cantidad})`
                         <div className={`confirm-overlay fade-in`}>
                             <div className="confirm-box">
                                 <h3>Tu pedido fue generado.</h3>
-                                <p>Recuerda completar los pasos anteriores para finalizar tu compra</p>
+                                <p>Recuerda enviar tu pedido por whatsapp para confirmar de manera rapida la orden</p>
                                 <p>
                                     ⚠️ <span>
-                                        Al cerrar esta ventana no verás más los datos de pedido y pago.
+                                        Al cerrar esta ventana no verás más los datos de checkout.
                                     </span>⚠️
                                 </p>
                                 <div className="confirm-actions">
