@@ -18,7 +18,7 @@ function Footer() {
                 <h3 className="footerName">dielectronics.ar</h3>
                 <p className="footer-description">Tienda de tecnologia online</p>
                 <a
-                    href="https://www.instagram.com/buenosaireswax/"
+                    href="https://www.instagram.com/dielectronics.arg/"
                     target="_blank"
                     rel="noreferrer"
                 >
