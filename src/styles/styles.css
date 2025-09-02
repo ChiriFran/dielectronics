@@ -115,7 +115,7 @@ body {
 
 .contactoNav {
     text-decoration: none;
-    color: var(--color-letra);
+    color: var(--color-fondo);
     margin-right: 3rem;
     font-family: Helvetica;
     font-weight: 700;
