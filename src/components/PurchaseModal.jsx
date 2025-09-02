@@ -323,7 +323,6 @@ ${cartItems.map(p => `- ${p.cantidad} x ${p.titulo} ($${p.precio * p.cantidad})`
                     {pedidoEnviado ? (
                         <>
                             <h2 className="modalTitle">✅ Pedido generado</h2>
-                            <p className="modalText">Finalizá tu compra: solo 2 pasos</p>
                             <p className="modalText">🧾 Número de orden:<br /><strong>{pedidoId}</strong></p>
                             <p className="modalText">
                                 <strong>Total del pedido:</strong><br />
@@ -360,11 +359,6 @@ ${cartItems.map(p => `- ${p.cantidad} x ${p.titulo} ($${p.precio * p.cantidad})`
                             >
                                 📲 Enviar pedido por WhatsApp
                             </button>
-
-                            {/* Texto final */}
-                            <div className="info-box">
-                                Nos contactaremos para mantenerte al tanto de todo por este mismo medio.
-                            </div>
 
                             <button className="btn-copiar" onClick={copiarMensajeAlPortapapeles}>
                                 Copiar pedido 📋
