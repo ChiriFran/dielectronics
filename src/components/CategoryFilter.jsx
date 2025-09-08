@@ -1,12 +1,19 @@
 import "../styles/CategoryFilter.css";
 
-// 👇 acá reemplazás las rutas cuando tengas tus SVGs
+// Importar los SVGs
+import phoneIcon from "../../assets/icons/iconosFiltroCategoria/phone.svg";
+import tabletIcon from "../../assets/icons/iconosFiltroCategoria/tablet.svg";
+import laptopIcon from "../../assets/icons/iconosFiltroCategoria/laptop.svg";
+import earbudsIcon from "../../assets/icons/iconosFiltroCategoria/earbuds.svg";
+import pencilSquareIcon from "../../assets/icons/iconosFiltroCategoria/pencil-square.svg";
+
+// Array de categorías usando los íconos importados
 const categorias = [
-    { id: "celulares", label: "Celulares", icon: "/assets/icons/iconosFiltroCategoria/phone.svg" },
-    { id: "tablets", label: "Tablets", icon: "/assets/icons/iconosFiltroCategoria/tablet.svg" },
-    { id: "computadoras", label: "Computadoras", icon: "../../assets/icons/iconosFiltroCategoria/laptop.svg" },
-    { id: "auriculares", label: "Auriculares", icon: "../../assets/icons/iconosFiltroCategoria/earbuds.svg" },
-    { id: "varios", label: "Varios", icon: "../../assets/icons/iconosFiltroCategoria/pencil-square.svg" },
+    { id: "celulares", label: "Celulares", icon: phoneIcon },
+    { id: "tablets", label: "Tablets", icon: tabletIcon },
+    { id: "computadoras", label: "Computadoras", icon: laptopIcon },
+    { id: "auriculares", label: "Auriculares", icon: earbudsIcon },
+    { id: "varios", label: "Varios", icon: pencilSquareIcon },
 ];
 
 function CategoryFilter({ categoriaSeleccionada, setCategoriaSeleccionada }) {
