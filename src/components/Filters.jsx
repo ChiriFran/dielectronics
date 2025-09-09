@@ -6,29 +6,36 @@ import searchIcon from "../../assets/icons/lupa.png";
 function Filters({
     filtroTexto,
     setFiltroTexto,
-    generoSeleccionado,
-    setGeneroSeleccionado,
-    estiloSeleccionado,
-    setEstiloSeleccionado,
-    selloSeleccionado,
-    setSelloSeleccionado,
-    autorSeleccionado,
-    setAutorSeleccionado,
+
+    marcaSeleccionada,
+    setMarcaSeleccionada,
+
+    categoriaSeleccionada,
+    setCategoriaSeleccionada,
+
+    almacenamientoSeleccionado,
+    setAlmacenamientoSeleccionado,
+
+    acabadoSeleccionado,
+    setAcabadoSeleccionado,
+
     verDisponibles,
     setVerDisponibles,
+
     productos,
 }) {
-    const generos = useMemo(() => [...new Set(productos.map((p) => p.genero).filter(Boolean))], [productos]);
-    const estilos = useMemo(() => [...new Set(productos.map((p) => p.estilo).filter(Boolean))], [productos]);
-    const sellos = useMemo(() => [...new Set(productos.map((p) => p.sello).filter(Boolean))], [productos]);
-    const autores = useMemo(() => [...new Set(productos.map((p) => p.autor).filter(Boolean))], [productos]);
+    // 🔹 Generar listas únicas para cada campo
+    const marcas = useMemo(() => [...new Set(productos.map((p) => p.marca).filter(Boolean))], [productos]);
+    const categorias = useMemo(() => [...new Set(productos.map((p) => p.categoria).filter(Boolean))], [productos]);
+    const almacenamientos = useMemo(() => [...new Set(productos.map((p) => p.especificacionesAlmacenamiento).filter(Boolean))], [productos]);
+    const acabados = useMemo(() => [...new Set(productos.map((p) => p.especificacionesAcabado).filter(Boolean))], [productos]);
 
     const limpiarFiltros = () => {
         setFiltroTexto("");
-        setGeneroSeleccionado("");
-        setEstiloSeleccionado("");
-        setSelloSeleccionado("");
-        setAutorSeleccionado("");
+        setMarcaSeleccionada("");
+        setCategoriaSeleccionada("");
+        setAlmacenamientoSeleccionado("");
+        setAcabadoSeleccionado("");
         setVerDisponibles(false);
     };
 
@@ -47,7 +54,7 @@ function Filters({
                     />
                 </div>
 
-                {/* 🔹 Botón siempre antes que "Sellos" */}
+                {/* Botón disponibles */}
                 <button
                     className={`filters-item ${verDisponibles ? "activo" : ""}`}
                     onClick={() => setVerDisponibles(!verDisponibles)}
@@ -55,47 +62,51 @@ function Filters({
                     {verDisponibles ? "Ver Todos" : "Ver Disponibles"}
                 </button>
 
+                {/* Acabado */}
                 <select
-                    value={estiloSeleccionado}
-                    onChange={(e) => setEstiloSeleccionado(e.target.value)}
+                    value={acabadoSeleccionado}
+                    onChange={(e) => setAcabadoSeleccionado(e.target.value)}
                     className="filters-item"
                 >
-                    <option value="">Color</option>
-                    {estilos.map((e) => (
-                        <option key={e} value={e}>{e}</option>
+                    <option value="">Acabado</option>
+                    {acabados.map((a) => (
+                        <option key={a} value={a}>{a}</option>
                     ))}
                 </select>
 
+                {/* Almacenamiento */}
                 <select
-                    value={generoSeleccionado}
-                    onChange={(e) => setGeneroSeleccionado(e.target.value)}
+                    value={almacenamientoSeleccionado}
+                    onChange={(e) => setAlmacenamientoSeleccionado(e.target.value)}
                     className="filters-item"
                 >
                     <option value="">Almacenamiento</option>
-                    {generos.map((g) => (
-                        <option key={g} value={g}>{g}</option>
+                    {almacenamientos.map((al) => (
+                        <option key={al} value={al}>{al}</option>
                     ))}
                 </select>
 
-                <select
-                    value={selloSeleccionado}
-                    onChange={(e) => setSelloSeleccionado(e.target.value)}
+                {/* Categoría */}
+{/*                 <select
+                    value={categoriaSeleccionada}
+                    onChange={(e) => setCategoriaSeleccionada(e.target.value)}
                     className="filters-item"
                 >
-                    <option value="">Modelo</option>
-                    {sellos.map((s) => (
-                        <option key={s} value={s}>{s}</option>
+                    <option value="">Categoría</option>
+                    {categorias.map((c) => (
+                        <option key={c} value={c}>{c}</option>
                     ))}
-                </select>
+                </select> */}
 
+                {/* Marca */}
                 <select
-                    value={autorSeleccionado}
-                    onChange={(e) => setAutorSeleccionado(e.target.value)}
+                    value={marcaSeleccionada}
+                    onChange={(e) => setMarcaSeleccionada(e.target.value)}
                     className="filters-item"
                 >
                     <option value="">Marca</option>
-                    {autores.map((a) => (
-                        <option key={a} value={a}>{a}</option>
+                    {marcas.map((m) => (
+                        <option key={m} value={m}>{m}</option>
                     ))}
                 </select>
 

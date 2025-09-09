@@ -66,20 +66,21 @@ function ProductItem({ producto: productoProp, mostrarMensaje }) {
                     ${producto.precio.toLocaleString("es-AR", { minimumFractionDigits: 0 })}
                 </p>
 
-                <p className="description">
+{/*                 <p className="description">
                     {`${(producto.descripcion).slice(0, 150)}${(producto.descripcion).length > 150 ? '...' : ''
                         }`}
                 </p>
-
+ */}
                 {/* Botón ver especificaciones */}
-                <button
+
+{/*                 <button
                     className="specs-button"
                     onClick={() => setMostrarEspecificaciones(true)}
                 >
                     Ver mas info
-                </button>
+                </button> */}
 
-                <div className="button-container">
+{/*                 <div className="button-container">
                     <button
                         className="add-button"
                         onClick={handleAdd}
@@ -104,17 +105,18 @@ function ProductItem({ producto: productoProp, mostrarMensaje }) {
                     {cantidadEnCarrito > 0 && (
                         <span> (En carrito: {cantidadEnCarrito})</span>
                     )}
-                </div>
+                </div> */}
             </div>
 
             {/* Botón flotante FAQ */}
-            <div
+
+{/*             <div
                 className="faq-button"
                 onClick={() => setMostrarFaq(true)}
                 title="Preguntas frecuentes"
             >
                 i
-            </div>
+            </div> */}
 
             {mostrarFaq && <FaqModal onClose={() => setMostrarFaq(false)} />}
 

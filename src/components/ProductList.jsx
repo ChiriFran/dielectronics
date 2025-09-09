@@ -12,7 +12,7 @@ import Notificacion from "./Notificacion";
 import Spinner from "./Spinner";
 import InstagramPopup from "./InstagramPopup";
 
-import '../styles/ProductList.css'
+import '../styles/ProductList.css';
 
 const BATCH_SIZE = 15;
 const MIN_LOADING_TIME = 800;
@@ -23,17 +23,13 @@ const ProductList = () => {
   const [loading, setLoading] = useState(true);
   const [limit, setLimit] = useState(BATCH_SIZE);
 
-  // Filtros de texto y atributos
+  // 🔹 Filtros
   const [filtroTexto, setFiltroTexto] = useState("");
-  const [generoSeleccionado, setGeneroSeleccionado] = useState("");
-  const [estiloSeleccionado, setEstiloSeleccionado] = useState("");
-  const [selloSeleccionado, setSelloSeleccionado] = useState("");
-  const [autorSeleccionado, setAutorSeleccionado] = useState("");
-  const [verDisponibles, setVerDisponibles] = useState(false);
-
-  // Filtro por categoría
+  const [marcaSeleccionada, setMarcaSeleccionada] = useState("");
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState("");
-
+  const [almacenamientoSeleccionado, setAlmacenamientoSeleccionado] = useState("");
+  const [acabadoSeleccionado, setAcabadoSeleccionado] = useState("");
+  const [verDisponibles, setVerDisponibles] = useState(false);
   const { mensaje, visible, mostrarMensaje } = useNotificacion(1000);
 
   const sentinelRef = useRef();
@@ -62,22 +58,31 @@ const ProductList = () => {
     }
   }, [cartItems, mostrarMensaje]);
 
-  // Filtrado y orden
+  // 🔹 Filtrado y orden
   const productosFiltrados = useMemo(() => {
     const filtrados = productos.filter((producto) => {
       const coincideTexto = (producto.titulo || "")
         .toLowerCase()
         .includes(filtroTexto.toLowerCase());
 
-      const coincideGenero = !generoSeleccionado || producto.genero === generoSeleccionado;
-      const coincideEstilo = !estiloSeleccionado || producto.estilo === estiloSeleccionado;
-      const coincideSello = !selloSeleccionado || producto.sello === selloSeleccionado;
-      const coincideAutor = !autorSeleccionado || producto.autor === autorSeleccionado;
+      const coincideMarca = !marcaSeleccionada || producto.marca === marcaSeleccionada;
+      const coincideCategoria = !categoriaSeleccionada || producto.categoria === categoriaSeleccionada;
+      const coincideAlmacenamiento =
+        !almacenamientoSeleccionado || producto.especificacionesAlmacenamiento === almacenamientoSeleccionado;
+      const coincideAcabado =
+        !acabadoSeleccionado || producto.especificacionesAcabado === acabadoSeleccionado;
+
       const stockDisponible = ((producto.cantidad ?? 0) - (producto.reservados ?? 0)) > 0;
       const coincideStock = !verDisponibles || stockDisponible;
-      const coincideCategoria = !categoriaSeleccionada || producto.categoria === categoriaSeleccionada;
 
-      return coincideTexto && coincideGenero && coincideEstilo && coincideSello && coincideAutor && coincideStock && coincideCategoria;
+      return (
+        coincideTexto &&
+        coincideMarca &&
+        coincideCategoria &&
+        coincideAlmacenamiento &&
+        coincideAcabado &&
+        coincideStock
+      );
     });
 
     // Orden según categoriasOrden; desconocidos al final
@@ -95,17 +100,16 @@ const ProductList = () => {
   }, [
     productos,
     filtroTexto,
-    generoSeleccionado,
-    estiloSeleccionado,
-    selloSeleccionado,
-    autorSeleccionado,
-    verDisponibles,
-    categoriaSeleccionada
+    marcaSeleccionada,
+    categoriaSeleccionada,
+    almacenamientoSeleccionado,
+    acabadoSeleccionado,
+    verDisponibles
   ]);
 
   const productosLimitados = productosFiltrados.slice(0, limit);
 
-  // Scroll infinito
+  // 🔹 Scroll infinito
   const cargarMas = useCallback((node) => {
     if (sentinelRef.current) sentinelRef.current.disconnect();
 
@@ -140,24 +144,24 @@ const ProductList = () => {
 
   return (
     <div>
-      {/* Filtros clásicos */}
+      {/* 🔹 Filtros */}
       <Filters
         filtroTexto={filtroTexto}
         setFiltroTexto={setFiltroTexto}
-        generoSeleccionado={generoSeleccionado}
-        setGeneroSeleccionado={setGeneroSeleccionado}
-        estiloSeleccionado={estiloSeleccionado}
-        setEstiloSeleccionado={setEstiloSeleccionado}
-        selloSeleccionado={selloSeleccionado}
-        setSelloSeleccionado={setSelloSeleccionado}
-        autorSeleccionado={autorSeleccionado}
-        setAutorSeleccionado={setAutorSeleccionado}
+        marcaSeleccionada={marcaSeleccionada}
+        setMarcaSeleccionada={setMarcaSeleccionada}
+        categoriaSeleccionada={categoriaSeleccionada}
+        setCategoriaSeleccionada={setCategoriaSeleccionada}
+        almacenamientoSeleccionado={almacenamientoSeleccionado}
+        setAlmacenamientoSeleccionado={setAlmacenamientoSeleccionado}
+        acabadoSeleccionado={acabadoSeleccionado}
+        setAcabadoSeleccionado={setAcabadoSeleccionado}
         verDisponibles={verDisponibles}
         setVerDisponibles={setVerDisponibles}
         productos={productos}
       />
 
-      {/* Filtro por categoría */}
+      {/* 🔹 Filtro por categoría (extra) */}
       <CategoryFilter
         categoriaSeleccionada={categoriaSeleccionada}
         setCategoriaSeleccionada={setCategoriaSeleccionada}
