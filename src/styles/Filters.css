@@ -6,7 +6,7 @@
     gap: 0.5rem;
     align-items: center;
     justify-content: center;
-    margin: 0 8%;
+    margin: 0 4%;
     padding: 1rem 0;
     border-top: 0.5px solid var(--color-letra);
     border-bottom: 0.5px solid var(--color-letra);
@@ -30,7 +30,6 @@
     flex-wrap: wrap;
     flex-flow: row;
     width: 100%;
-    gap: 0.5rem;
     margin-left: auto;
 }
 
@@ -81,6 +80,11 @@
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
+        padding: 0;
+    }
+    
+    .filters-item{
+        padding: 0 0.5rem;
     }
 
     .filters-group {
