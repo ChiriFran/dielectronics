@@ -54,6 +54,13 @@
 }
 
 @media (max-width: 767px) {
+
+    .category-filter {
+        width: 90%;
+        padding: 0 0;
+        margin: 1rem 0;
+    }
+
     .category-scroll {
         overflow-x: auto;
         scrollbar-width: thin;
@@ -74,5 +81,10 @@
         /* 3 íconos visibles */
         min-width: calc(100% / 3.5);
         /* 3 completos y medio ícono */
+    }
+
+    .category-item .icon {
+        width: 22px;
+        height: 22px;
     }
 }

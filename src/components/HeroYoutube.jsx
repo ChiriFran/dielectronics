@@ -3,7 +3,7 @@ import "../styles/HeroYoutube.css";
 
 const HeroYoutube = () => {
     // URL del video de YouTube
-    const videoId = "eDqfg_LexCQ";
+    const videoId = "_-AS5DtDeqs";
     const videoUrl = `https://www.youtube.com/watch?v=${videoId}`;
     const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
 
@@ -14,7 +14,7 @@ const HeroYoutube = () => {
         >
             <div className="hero-youtube-overlay">
                 <div className="hero-youtube-content">
-                    <h4>Descubre el iPhone 16 Pro en detalle | Apple</h4>
+                    <h4>Introducing iPhone 17 Pro</h4>
                     <a
                         href={videoUrl}
                         target="_blank"
